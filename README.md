@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Tentu! Berikut adalah contoh `README.md` yang user-friendly dan penuh emoji sesuai dengan permintaan Anda:
 
-## Getting Started
+# 🌐 itsc-division-web
 
-First, run the development server:
+Selamat datang di **itsc-division-web**! 🚀
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Web ini dirancang untuk memenuhi semua kebutuhan divisi ITSC, termasuk:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- 📚 E-Book
+- 🎥 E-Video Learning
+- 🕒 Absensi
+- Dan masih banyak lagi! 🎉
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Teknologi yang Digunakan
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Proyek ini dibangun dengan teknologi-teknologi berikut:
 
-## Learn More
+- ⚛️ **Next.js** - Framework React modern untuk pengembangan web.
+- 💻 **Prisma** - ORM untuk berinteraksi dengan database.
+- 🛢️ **PostgreSQL** - Sistem manajemen basis data relasional yang kuat.
 
-To learn more about Next.js, take a look at the following resources:
+## 🚀 Cara Memulai
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Clone repository** ini ke komputer Anda.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+   ```bash
+   git clone https://github.com/username/itsc-division-web.git
+   ```
 
-## Deploy on Vercel
+2. **Instal dependencies** menggunakan `npm` atau `yarn`.
+   ```bash
+   npm install
+   ```
+   atau
+   ```bash
+   yarn install
+   ```
+3. **Jalankan pengembangan server** dengan perintah berikut:
+   ```bash
+   npm run dev
+   ```
+   atau
+   ```bash
+   yarn dev
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📦 Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Untuk deployment, Anda bisa menggunakan platform seperti Vercel, Heroku, atau platform favorit Anda lainnya. Cukup pastikan environment variables sudah diatur dengan benar.
+
+## 📝 Lisensi
+
+Proyek ini dilisensikan di bawah lisensi MIT. Silakan lihat file `LICENSE` untuk detail lebih lanjut.
+
+---
+
+Terima kasih telah berkontribusi dan menggunakan **itsc-division-web**! 💻💡
+
+Anda bisa menyesuaikan dan menambahkan detail lainnya sesuai kebutuhan. Semoga bermanfaat! 😊
