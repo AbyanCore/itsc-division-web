@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model attendance {
+  id              Int              @id @default(autoincrement())
+  user_uuid       String           @db.VarChar(100)
+  attendance_type attendance_type? @default(tanpa_keterangan)
+  create_at       DateTime         @default(now()) @db.Timestamp(6)
+  user            user             @relation(fields: [user_uuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model class_enrollment {
+  id          Int      @id @default(autoincrement())
+  user_uuid   String   @db.VarChar(100)
+  division_id Int
+  division    division @relation(fields: [division_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "class_enrollment_class_id_fkey")
+  user        user     @relation(fields: [user_uuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model user {
+  uuid             String             @id @db.VarChar(100)
+  fullname         String             @db.VarChar(100)
+  surname          String             @db.VarChar(50)
+  address          String             @db.VarChar(100)
+  email            String             @db.VarChar(50)
+  password         String             @db.VarChar(50)
+  type             user_type          @default(guest)
+  create_at        DateTime           @default(now()) @db.Timestamp(6)
+  attendance       attendance[]
+  class_enrollment class_enrollment[]
+}
+
+model division {
+  id               Int                @id @default(autoincrement())
+  name             String             @db.VarChar(50)
+  description      String             @db.VarChar(255)
+  class_enrollment class_enrollment[]
+}
+
+enum attendance_type {
+  hadir
+  pulang
+  sakit
+  izin
+  tanpa_keterangan @map("tanpa keterangan")
+}
+
+enum user_type {
+  admin
+  pengajar
+  siswa
+  guest
+}
