@@ -47,6 +47,11 @@ class Secure {
 
     return signature === expectedSignature && payload.exp > Date.now();
   }
+
+  static extractPayload(token: string): JwtModel {
+    const [_, encodedPayload, __] = token.split(".");
+    return JSON.parse(Buffer.from(encodedPayload, "base64").toString());
+  }
 }
 
 export default Secure;
