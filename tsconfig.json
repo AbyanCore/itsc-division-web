@@ -34,6 +34,9 @@
       "@/components/*": [
         "./src/components/*"
       ],
+      "@/serverAction/*": [
+        "./src/server-action/*"
+      ],
     }
   },
   "include": [

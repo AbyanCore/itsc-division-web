@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
   const user = await db.user.findFirst({
     where: {
       email: email,
-      password: password,
+      password: Secure.hashPassword(password),
     },
   });
 

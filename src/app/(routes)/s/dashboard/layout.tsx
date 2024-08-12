@@ -1,29 +1,20 @@
 import SidebarDashboard from "@/component/SidebarDashboard";
-import { headers } from "next/headers";
+import userService from "@/service/userService";
+import Secure from "@/utils/secure";
+import { cookies } from "next/headers";
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const headerList = headers();
-  const current_title = headerList
-    .get("referer")
-    ?.split("/")
-    .pop()
-    ?.toUpperCase();
+  const token = cookies().get("token")?.value!;
+  const IsAdmin = (await userService.getUserByToken(token))?.type === "admin";
 
   return (
     <main className="flex flex-row w-screen h-screen">
-      <SidebarDashboard />
-      <div className="flex flex-col w-full h-full">
-        <div className="flex flex-row justify-between p-2">
-          <h1 className="font-bold text-2xl text-center w-full">
-            {current_title}
-          </h1>
-        </div>
-        <div className="flex-1 p-2">{children}</div>
-      </div>
+      <SidebarDashboard IsAdmin={IsAdmin} />
+      <div className="pl-3 w-full h-full">{children}</div>
     </main>
   );
 }

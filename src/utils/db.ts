@@ -1,22 +1,15 @@
 import { PrismaClient } from "@prisma/client";
-class Database {
-  private static instance: Database;
-  private prisma: PrismaClient;
 
-  private constructor() {
-    this.prisma = new PrismaClient();
-  }
+const prismaClientSingleton = () => {
+  return new PrismaClient();
+};
 
-  public static getInstance(): Database {
-    if (!Database.instance) {
-      Database.instance = new Database();
-    }
-    return Database.instance;
-  }
+declare const globalThis: {
+  prismaGlobal: ReturnType<typeof prismaClientSingleton>;
+} & typeof global;
 
-  public getPrisma(): PrismaClient {
-    return this.prisma;
-  }
-}
+const db = globalThis.prismaGlobal ?? prismaClientSingleton();
 
-export default Database.getInstance().getPrisma();
+export default db;
+
+if (process.env.NODE_ENV !== "production") globalThis.prismaGlobal = db;

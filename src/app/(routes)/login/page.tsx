@@ -1,4 +1,4 @@
-import signin from "./_action/signin";
+import signin from "@/serverAction/loginAction";
 
 const LoginPage = () => {
   return (

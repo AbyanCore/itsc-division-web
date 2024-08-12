@@ -24,12 +24,12 @@ model class_enrollment {
 }
 
 model user {
-  uuid             String             @id @db.VarChar(100)
+  uuid             String             @id @default(uuid()) @db.VarChar(100)
   fullname         String             @db.VarChar(100)
   surname          String             @db.VarChar(50)
   address          String             @db.VarChar(100)
   email            String             @db.VarChar(50)
-  password         String             @db.VarChar(50)
+  password         String             @db.VarChar(255)
   type             user_type          @default(guest)
   create_at        DateTime           @default(now()) @db.Timestamp(6)
   attendance       attendance[]

@@ -1,0 +1,56 @@
+import { createUser } from "@/server-action/dashboardUserAction";
+
+export default function dashboardUserCreatePage() {
+  return (
+    <div className="w-screen h-screen">
+      <h1 className="font-bold text-2xl w-full text-center">Create User</h1>
+      <form className="max-w-md mx-auto" action={createUser}>
+        <input
+          name="fullname"
+          type="text"
+          placeholder="fullname"
+          className="w-full mb-4 p-2 border rounded"
+          required
+        />
+        <input
+          name="surname"
+          type="text"
+          placeholder="surname"
+          className="w-full mb-4 p-2 border rounded"
+        />
+        <input
+          name="email"
+          type="email"
+          placeholder="email"
+          className="w-full mb-4 p-2 border rounded"
+          required
+        />
+        <input
+          name="password"
+          type="password"
+          placeholder="password"
+          className="w-full mb-4 p-2 border rounded"
+          required
+        />
+        <textarea
+          name="address"
+          placeholder="address"
+          className="w-full mb-4 p-2 border rounded"
+          rows={4}
+        ></textarea>
+        <select name="type" className="w-full mb-4 p-2 border rounded">
+          <option value="admin">Admin</option>
+          <option value="user">User</option>
+          <option value="guest">Guest</option>
+          <option value="pengajar">Pengajar</option>
+        </select>
+        <button
+          type="submit"
+          className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 w-full"
+        >
+          Create User
+        </button>
+      </form>
+    </div>
+  );
+}

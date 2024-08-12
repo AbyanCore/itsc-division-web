@@ -18,5 +18,9 @@ export default function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
+  if (path.startsWith("/login") && IsAuthenticated(req)) {
+    return NextResponse.redirect(new URL("/s/dashboard", req.url));
+  }
+
   return NextResponse.next();
 }

@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  /* border: solid 1px red; */
+::-webkit-scrollbar {
+  display: none;
+}
+
+html {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }

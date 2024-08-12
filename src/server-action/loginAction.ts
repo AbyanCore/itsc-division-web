@@ -18,5 +18,5 @@ export default async function signin(data: FormData) {
     }
   });
 
-  redirect("/dashboard");
+  redirect("/s/dashboard");
 }
