@@ -1,11 +1,12 @@
-import { fetchUser, updateUser } from "@/server-action/dashboardUserAction";
+import { getUser, updateUser } from "@/server-action/dashboardUserAction";
+import Link from "next/link";
 
 export default async function dashboardUserCreatePage({
   params,
 }: {
   params: any;
 }) {
-  const user = await fetchUser(params.uuid);
+  const user = await getUser(params.uuid);
 
   return (
     <div className="w-screen h-screen">
@@ -54,16 +55,24 @@ export default async function dashboardUserCreatePage({
           className="w-full mb-4 p-2 border rounded"
         >
           <option value="admin">Admin</option>
-          <option value="user">User</option>
+          <option value="siswa">Siswa</option>
           <option value="guest">Guest</option>
           <option value="pengajar">Pengajar</option>
         </select>
-        <button
-          type="submit"
-          className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 w-full"
-        >
-          Apply
-        </button>
+        <div className="flex flex-row gap-2">
+          <Link
+            href="/s/dashboard/division"
+            className="bg-red-500 flex-1 text-white font-bold py-2 px-4 rounded hover:bg-red-600 w-full"
+          >
+            Cancel
+          </Link>
+          <button
+            type="submit"
+            className="bg-blue-500 flex-2 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 w-full"
+          >
+            Apply
+          </button>
+        </div>
       </form>
     </div>
   );

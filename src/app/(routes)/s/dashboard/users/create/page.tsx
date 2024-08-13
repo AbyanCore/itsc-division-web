@@ -1,4 +1,5 @@
 import { createUser } from "@/server-action/dashboardUserAction";
+import Link from "next/link";
 
 export default function dashboardUserCreatePage() {
   return (
@@ -38,18 +39,30 @@ export default function dashboardUserCreatePage() {
           className="w-full mb-4 p-2 border rounded"
           rows={4}
         ></textarea>
-        <select name="type" className="w-full mb-4 p-2 border rounded">
-          <option value="admin">Admin</option>
-          <option value="user">User</option>
-          <option value="guest">Guest</option>
-          <option value="pengajar">Pengajar</option>
-        </select>
-        <button
-          type="submit"
-          className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 w-full"
+        <select
+          name="type"
+          defaultValue="guest"
+          className="w-full mb-4 p-2 border rounded"
         >
-          Create User
-        </button>
+          <option value="admin">Admin</option>
+          <option value="siswa">Siswa</option>
+          <option value="guest">Guest</option>
+          <option value="pengajar">ePngajar</option>
+        </select>
+        <div className="flex flex-row gap-2">
+          <Link
+            href="/s/dashboard/division"
+            className="bg-red-500 flex-1 text-white font-bold py-2 px-4 rounded hover:bg-red-600 w-full"
+          >
+            Cancel
+          </Link>
+          <button
+            type="submit"
+            className="bg-blue-500 flex-2 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 w-full"
+          >
+            Create User
+          </button>
+        </div>
       </form>
     </div>
   );

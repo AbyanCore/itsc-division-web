@@ -16,11 +16,13 @@ export default function SidebarDashboard({ IsAdmin }: { IsAdmin: boolean }) {
   return (
     <div
       className={
-        isOpen ? "p-2 pr-5 shadow-xl rounded-xl select-none" : "p-2 h-fit"
+        isOpen
+          ? "bg-zinc-100 p-2 pr-5 rounded-xl select-none"
+          : "p-2 h-fit bg-zinc-100 "
       }
     >
       <div className="flex flex-row cursor-pointer">
-        <Bars3Icon className="w-10 h-10" onClick={() => setIsOpen(!isOpen)} />
+        <Bars3Icon className="w-10 h-10 " onClick={() => setIsOpen(!isOpen)} />
       </div>
       <div className="flex flex-col w-fit h-screen pt-5 gap-3">
         {IsAdmin ? (

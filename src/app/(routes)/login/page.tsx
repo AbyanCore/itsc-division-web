@@ -1,13 +1,21 @@
 import signin from "@/serverAction/loginAction";
 
-const LoginPage = () => {
+const LoginPage = ({ searchParams }: { searchParams?: any }) => {
+  console.log(searchParams);
   return (
     <div className="flex justify-center items-center h-screen">
       <form
-        className="bg-white shadow-2xl rounded px-8 pt-6 pb-8 mb-4"
+        className={`bg-white shadow-2xl rounded-xl px-8 pt-6 pb-8 mb-4 transition-colors duration-300 ${
+          searchParams.error != null
+            ? "border-red-400 border-4 shadow-red-300"
+            : ""
+        }`}
         action={signin}
       >
         <h1 className="text-black font-bold text-3xl mb-2">Sign In </h1>
+        <p className="text-red-500 text-xs italic">
+          {searchParams.error != null ? searchParams.error : ""}
+        </p>
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"

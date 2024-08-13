@@ -32,6 +32,7 @@ model user {
   password         String             @db.VarChar(255)
   type             user_type          @default(guest)
   create_at        DateTime           @default(now()) @db.Timestamp(6)
+  update_at        DateTime           @updatedAt @db.Timestamp(6)
   attendance       attendance[]
   class_enrollment class_enrollment[]
 }
@@ -40,6 +41,8 @@ model division {
   id               Int                @id @default(autoincrement())
   name             String             @db.VarChar(50)
   description      String             @db.VarChar(255)
+  create_at        DateTime           @default(now()) @db.Timestamp(6)
+  update_at        DateTime           @updatedAt @db.Timestamp(6)
   class_enrollment class_enrollment[]
 }
 
