@@ -1,7 +1,11 @@
 import { createDivision } from "@/server-action/dashboardDivisionAction";
+import userService from "@/service/userService";
+import { user } from "@prisma/client";
 import Link from "next/link";
 
-export default function dashboardUserCreatePage() {
+export default async function dashboardUserCreatePage() {
+  const getPengajar = await userService.getPengajar("all");
+
   return (
     <div className="w-screen h-screen">
       <h1 className="font-bold text-2xl w-full text-center">Create Division</h1>
@@ -19,6 +23,13 @@ export default function dashboardUserCreatePage() {
           className="w-full mb-4 p-2 border rounded"
           rows={4}
         ></textarea>
+        <select name="division_leader">
+          {getPengajar.map((pengajar) => (
+            <option key={pengajar.uuid} value={pengajar.uuid}>
+              {pengajar.fullname}
+            </option>
+          ))}
+        </select>
         <div className="flex flex-row gap-2">
           <Link
             href="/s/dashboard/division"

@@ -35,7 +35,6 @@ class Secure {
   static verifyToken(token: string): boolean {
     const [encodedHeader, encodedPayload, signature] = token.split(".");
 
-    const header = JSON.parse(Buffer.from(encodedHeader, "base64").toString());
     const payload = JSON.parse(
       Buffer.from(encodedPayload, "base64").toString()
     ) as JwtModel;

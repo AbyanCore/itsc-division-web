@@ -2,6 +2,7 @@
 
 import divisionService from "@/service/divisionService";
 import { division } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 import { redirect, RedirectType } from "next/navigation";
 
 export async function getDivisions() {
@@ -16,6 +17,7 @@ export async function getDivision(id: number) {
 
 export async function deleteDivision(id: number) {
   await divisionService.deleteDivision(id);
+  revalidatePath("/s/dashboard/division");
 }
 
 export async function createDivision(data: FormData) {
@@ -37,5 +39,5 @@ export async function updateDivision(data: FormData) {
     res
   );
 
-  redirect("/s/dashboard/division", RedirectType.replace);
+  redirect("/s/dashboard/division");
 }

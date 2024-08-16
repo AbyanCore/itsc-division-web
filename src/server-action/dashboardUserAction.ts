@@ -36,7 +36,8 @@ export async function getUser(uuid: string) {
   return data;
 }
 
-export async function deleteUser(uuid: string) {
+export async function deleteUser(data: FormData) {
+  const uuid = data.get("uuid") as string;
   await userService.deleteUser(uuid);
   redirect("/s/dashboard/users", RedirectType.replace);
 }

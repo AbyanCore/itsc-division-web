@@ -1,47 +1,47 @@
-"use client";
-
-import { user } from "@prisma/client";
-import { useEffect, useState } from "react";
 import { deleteUser, getUsers } from "@/serverAction/dashboardUserAction";
-import { PencilIcon, PlusIcon, TrashIcon } from "@heroicons/react/16/solid";
-import { useRouter } from "next/navigation";
+import {
+  MagnifyingGlassIcon,
+  PencilIcon,
+  PlusIcon,
+  TrashIcon,
+} from "@heroicons/react/16/solid";
+import { user } from "@prisma/client";
+import Link from "next/link";
+import { redirect, RedirectType } from "next/navigation";
 
-const dashboardUsersPage = () => {
-  const [users, setUsers] = useState<user[]>([]);
-  const [search, setSearch] = useState<string>("");
-  const router = useRouter();
+const dashboardUsersPage = async ({ searchParams }: { searchParams: any }) => {
+  const search: string = searchParams.search ?? "";
+  const page: number = Number.parseInt(searchParams.page) ?? 1;
 
-  function fetchUsers() {
-    getUsers(search, 1).then((data) => {
-      setUsers(data);
-    });
-  }
+  const users = (await getUsers(search, page)) as user[];
 
-  useEffect(() => {
-    fetchUsers();
-  }, [search]);
-
-  function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
-    setSearch(event.target.value);
+  async function handleSearch(data: FormData) {
+    "use server";
+    redirect(
+      `/s/dashboard/users?page=${page}&search=${data.get("search")}`,
+      RedirectType.replace
+    );
   }
 
   return (
     <div className="w-full">
       <div className="flex flex-row justify-between items-center px-5">
-        <input
-          className="p-2 rounded-xl my-2 border"
-          placeholder="Search"
-          onChange={handleSearch}
-          value={search}
-        />
-        <div className="flex gap-2">
-          <button
-            onClick={() => router.push("/s/dashboard/users/create")}
-            className="bg-blue-500 text-white font-bold p-2 rounded hover:bg-blue-600"
-          >
-            <PlusIcon className="h-4 w-4" />
+        <form action={handleSearch} className="flex flex-row items-center">
+          <input
+            name="search"
+            className="p-2 rounded-xl my-2 border"
+            placeholder="Search"
+          />
+          <button type="submit" className="bg-blue-500 rounded-md p-2 m-2">
+            <MagnifyingGlassIcon className="h-4 w-4 text-white" />
           </button>
-        </div>
+        </form>
+        <Link
+          href="/s/dashboard/users/create"
+          className="bg-blue-500 text-white font-bold p-2 rounded hover:bg-blue-600"
+        >
+          <PlusIcon className="h-4 w-4" />
+        </Link>
       </div>
       <table className="w-full table-auto">
         <thead className="bg-slate-300">
@@ -74,25 +74,46 @@ const dashboardUsersPage = () => {
                 {user.update_at?.toLocaleDateString("id") ?? "-"}
               </td>
               <td className="border flex justify-center gap-2 p-1">
-                <button
-                  onClick={() =>
-                    router.push(`/s/dashboard/users/edit/${user.uuid}`)
-                  }
+                <Link
+                  type="submit"
+                  href={`/s/dashboard/users/edit/${user.uuid}`}
                   className="bg-blue-500 text-white font-bold p-2 rounded hover:bg-blue-600"
                 >
                   <PencilIcon className="h-4 w-4" />
-                </button>
-                <button
-                  onClick={() => deleteUser(user.uuid).then(() => fetchUsers())}
-                  className="bg-red-500 text-white font-bold p-2 rounded hover:bg-red-600"
-                >
-                  <TrashIcon className="h-4 w-4" />
-                </button>
+                </Link>
+                <form action={deleteUser}>
+                  <input type="hidden" name="uuid" value={user.uuid} />
+                  <button
+                    type="submit"
+                    className="bg-red-500 text-white font-bold p-2 rounded hover:bg-red-600"
+                  >
+                    <TrashIcon className="h-4 w-4" />
+                  </button>
+                </form>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <div className="flex flex-row gap-2 justify-center mt-2 items-center">
+        {page > 1 && (
+          <Link
+            href={`/s/dashboard/users?page=${page - 1}&search=${search}`}
+            className="bg-red-500 text-white font-bold py-2 px-3 rounded hover:bg-red-600"
+          >
+            prev
+          </Link>
+        )}
+        <p>{page}</p>
+        {page < 5 && (
+          <Link
+            href={`/s/dashboard/users?page=${page + 1}&search=${search}`}
+            className="bg-blue-500 text-white font-bold py-2 px-3 rounded hover:bg-blue-600"
+          >
+            next
+          </Link>
+        )}
+      </div>
     </div>
   );
 };

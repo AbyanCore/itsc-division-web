@@ -10,6 +10,9 @@ class userService {
   ) {
     return await db.user.findMany({
       where: filter,
+      orderBy: {
+        create_at: "asc",
+      },
       skip,
       take,
     });
@@ -19,6 +22,34 @@ class userService {
     const payload = Secure.extractPayload(token);
 
     return this.getUserById(payload.sub);
+  }
+
+  static async getPengajar(filter: "all" | "non-avaiable" | "avaiable") {
+    if (filter === "non-avaiable") {
+      return await db.user.findMany({
+        where: {
+          type: "pengajar",
+          division: {
+            none: {},
+          },
+        },
+      });
+    } else if (filter === "avaiable") {
+      return await db.user.findMany({
+        where: {
+          type: "pengajar",
+          division: {
+            some: {},
+          },
+        },
+      });
+    } else {
+      return await db.user.findMany({
+        where: {
+          type: "pengajar",
+        },
+      });
+    }
   }
 
   static async getUserById(uuid: string) {

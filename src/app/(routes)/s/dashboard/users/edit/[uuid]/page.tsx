@@ -42,6 +42,13 @@ export default async function dashboardUserCreatePage({
           placeholder="password"
           className="w-full mb-4 p-2 border rounded"
         />
+        <input
+          name="phone_number"
+          type="text"
+          placeholder="phone number"
+          defaultValue={user!.phone_number}
+          className="w-full mb-4 p-2 border rounded"
+        />
         <textarea
           name="address"
           placeholder="address"
@@ -61,7 +68,7 @@ export default async function dashboardUserCreatePage({
         </select>
         <div className="flex flex-row gap-2">
           <Link
-            href="/s/dashboard/division"
+            href="/s/dashboard/users"
             className="bg-red-500 flex-1 text-white font-bold py-2 px-4 rounded hover:bg-red-600 w-full"
           >
             Cancel

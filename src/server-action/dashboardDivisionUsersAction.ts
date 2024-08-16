@@ -1,21 +1,21 @@
 "use server";
 
-import classEnrollmentService from "@/service/classEnrollmentService";
+import DivisionEnrollmentService from "@/service/divisionEnrollmentService";
 import { redirect, RedirectType } from "next/navigation";
 
 export async function getUserAvaiable() {
-  return await classEnrollmentService.getAvaiableUser();
+  return await DivisionEnrollmentService.getAvaiableUser();
 }
 
 export async function getUserAssigned(divisonid: number) {
-  return await classEnrollmentService.getUsersByClassId(divisonid);
+  return await DivisionEnrollmentService.getUsersByClassId(divisonid);
 }
 
 export async function AddUserToClass(data: FormData) {
   const user_uuid = data.get("user_uuid")?.toString();
   const division_id = Number.parseInt(data.get("division_id")!.toString());
 
-  await classEnrollmentService.createClassEnrollment({
+  await DivisionEnrollmentService.createDivisionEnrollment({
     user: {
       connect: {
         uuid: user_uuid,
@@ -35,7 +35,7 @@ export async function RemoveUserFromClass(data: FormData) {
   const user_uuid = data.get("user_uuid")?.toString();
   const division_id = data.get("division_id")?.toString();
 
-  await classEnrollmentService.deleteClassEnrollmentByUserUuid(user_uuid!);
+  await DivisionEnrollmentService.deleteClassEnrollmentByUserUuid(user_uuid!);
 
   redirect(`/s/dashboard/division/${division_id}/users`, RedirectType.replace);
 }

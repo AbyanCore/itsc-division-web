@@ -33,6 +33,12 @@ export default function dashboardUserCreatePage() {
           className="w-full mb-4 p-2 border rounded"
           required
         />
+        <input
+          name="phone_number"
+          type="text"
+          placeholder="phone number"
+          className="w-full mb-4 p-2 border rounded"
+        />
         <textarea
           name="address"
           placeholder="address"
@@ -47,11 +53,11 @@ export default function dashboardUserCreatePage() {
           <option value="admin">Admin</option>
           <option value="siswa">Siswa</option>
           <option value="guest">Guest</option>
-          <option value="pengajar">ePngajar</option>
+          <option value="pengajar">Pengajar</option>
         </select>
         <div className="flex flex-row gap-2">
           <Link
-            href="/s/dashboard/division"
+            href="/s/dashboard/users"
             className="bg-red-500 flex-1 text-white font-bold py-2 px-4 rounded hover:bg-red-600 w-full"
           >
             Cancel

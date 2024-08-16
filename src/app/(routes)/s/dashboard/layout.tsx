@@ -1,6 +1,5 @@
 import SidebarDashboard from "@/component/SidebarDashboard";
 import userService from "@/service/userService";
-import Secure from "@/utils/secure";
 import { cookies } from "next/headers";
 
 export default async function DashboardLayout({
