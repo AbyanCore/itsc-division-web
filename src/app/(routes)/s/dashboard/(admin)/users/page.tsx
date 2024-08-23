@@ -9,14 +9,22 @@ import { user } from "@prisma/client";
 import Link from "next/link";
 import { redirect, RedirectType } from "next/navigation";
 
-const dashboardUsersPage = async ({ searchParams }: { searchParams: any }) => {
+const dashboardUsersPage = async ({
+  searchParams,
+}: {
+  searchParams: {
+    search: string;
+    page: number;
+  };
+}) => {
   const search: string = searchParams.search ?? "";
-  const page: number = Number.parseInt(searchParams.page) ?? 1;
+  const page: number = searchParams.page ?? 1;
 
   const users = (await getUsers(search, page)) as user[];
 
   async function handleSearch(data: FormData) {
     "use server";
+
     redirect(
       `/s/dashboard/users?page=${page}&search=${data.get("search")}`,
       RedirectType.replace
@@ -32,13 +40,13 @@ const dashboardUsersPage = async ({ searchParams }: { searchParams: any }) => {
             className="p-2 rounded-xl my-2 border"
             placeholder="Search"
           />
-          <button type="submit" className="bg-blue-500 rounded-md p-2 m-2">
+          <button type="submit" className="bg-blue-500 p-2.5 rounded-md m-2">
             <MagnifyingGlassIcon className="h-4 w-4 text-white" />
           </button>
         </form>
         <Link
           href="/s/dashboard/users/create"
-          className="bg-blue-500 text-white font-bold p-2 rounded hover:bg-blue-600"
+          className="bg-blue-500 text-white font-bold p-2.5 rounded-md hover:bg-blue-600"
         >
           <PlusIcon className="h-4 w-4" />
         </Link>
@@ -98,16 +106,20 @@ const dashboardUsersPage = async ({ searchParams }: { searchParams: any }) => {
       <div className="flex flex-row gap-2 justify-center mt-2 items-center">
         {page > 1 && (
           <Link
-            href={`/s/dashboard/users?page=${page - 1}&search=${search}`}
+            href={`/s/dashboard/users?page=${
+              Number(page) - 1
+            }&search=${search}`}
             className="bg-red-500 text-white font-bold py-2 px-3 rounded hover:bg-red-600"
           >
             prev
           </Link>
         )}
         <p>{page}</p>
-        {page < 5 && (
+        {users.length >= 10 && (
           <Link
-            href={`/s/dashboard/users?page=${page + 1}&search=${search}`}
+            href={`/s/dashboard/users?page=${
+              Number(page) + 1
+            }&search=${search}`}
             className="bg-blue-500 text-white font-bold py-2 px-3 rounded hover:bg-blue-600"
           >
             next

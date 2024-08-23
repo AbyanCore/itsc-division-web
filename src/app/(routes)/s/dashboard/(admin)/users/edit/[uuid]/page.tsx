@@ -1,3 +1,4 @@
+import BackButton from "@/component/BackButton";
 import { getUser, updateUser } from "@/server-action/dashboardUserAction";
 import Link from "next/link";
 
@@ -67,12 +68,9 @@ export default async function dashboardUserCreatePage({
           <option value="pengajar">Pengajar</option>
         </select>
         <div className="flex flex-row gap-2">
-          <Link
-            href="/s/dashboard/users"
-            className="bg-red-500 flex-1 text-white font-bold py-2 px-4 rounded hover:bg-red-600 w-full"
-          >
-            Cancel
-          </Link>
+          <BackButton className="bg-red-500 flex-1 text-white font-bold py-2 px-4 rounded hover:bg-red-600 w-full">
+            Back
+          </BackButton>
           <button
             type="submit"
             className="bg-blue-500 flex-2 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 w-full"

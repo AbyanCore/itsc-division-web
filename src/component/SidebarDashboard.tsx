@@ -18,7 +18,7 @@ export default function SidebarDashboard({ IsAdmin }: { IsAdmin: boolean }) {
       className={
         isOpen
           ? "bg-zinc-100 p-2 pr-5 rounded-xl select-none"
-          : "p-2 h-fit bg-zinc-100 "
+          : "p-2  bg-zinc-100 "
       }
     >
       <div className="flex flex-row cursor-pointer">

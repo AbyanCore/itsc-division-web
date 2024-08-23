@@ -1,6 +1,6 @@
+import BackButton from "@/component/BackButton";
 import { createDivision } from "@/server-action/dashboardDivisionAction";
 import userService from "@/service/userService";
-import { user } from "@prisma/client";
 import Link from "next/link";
 
 export default async function dashboardUserCreatePage() {
@@ -23,7 +23,10 @@ export default async function dashboardUserCreatePage() {
           className="w-full mb-4 p-2 border rounded"
           rows={4}
         ></textarea>
-        <select name="division_leader">
+        <select
+          name="division_leader"
+          className="w-full mb-4 p-2 border rounded"
+        >
           {getPengajar.map((pengajar) => (
             <option key={pengajar.uuid} value={pengajar.uuid}>
               {pengajar.fullname}
@@ -31,12 +34,9 @@ export default async function dashboardUserCreatePage() {
           ))}
         </select>
         <div className="flex flex-row gap-2">
-          <Link
-            href="/s/dashboard/division"
-            className="bg-red-500 flex-1 text-white font-bold py-2 px-4 rounded hover:bg-red-600 w-full"
-          >
-            Cancel
-          </Link>
+          <BackButton className="bg-red-500 flex-1 text-white font-bold py-2 px-4 rounded hover:bg-red-600 w-full">
+            Back
+          </BackButton>
           <button
             type="submit"
             className="bg-blue-500 flex-2 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 w-full"

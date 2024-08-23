@@ -1,7 +1,37 @@
+"use client";
+
 import signin from "@/serverAction/loginAction";
+import { TIME_TOKEN_EXPIRED } from "@/utils/constant";
+import { useRouter } from "next/navigation";
 
 const LoginPage = ({ searchParams }: { searchParams?: any }) => {
-  console.log(searchParams);
+  const router = useRouter();
+  function handleSubmit(data: FormData) {
+    const email = data.get("email")!.toString();
+    const password = data.get("password")!.toString();
+
+    fetch("/api/auth", {
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      credentials: "include",
+    }).then(async (res) => {
+      const data = await res.json();
+
+      if (res.status == 200) {
+        document.cookie = `token=${data.token}; path=/; max-age=${TIME_TOKEN_EXPIRED};`;
+        router.push("/s");
+      } else {
+        router.push(`/login?error=${data.message}`);
+      }
+    });
+  }
+
   return (
     <div className="flex justify-center items-center h-screen">
       <form
@@ -10,7 +40,7 @@ const LoginPage = ({ searchParams }: { searchParams?: any }) => {
             ? "border-red-400 border-4 shadow-red-300"
             : ""
         }`}
-        action={signin}
+        action={handleSubmit}
       >
         <h1 className="text-black font-bold text-3xl mb-2">Sign In </h1>
         <p className="text-red-500 text-xs italic">

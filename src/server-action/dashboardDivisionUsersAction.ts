@@ -3,12 +3,22 @@
 import DivisionEnrollmentService from "@/service/divisionEnrollmentService";
 import { redirect, RedirectType } from "next/navigation";
 
-export async function getUserAvaiable() {
-  return await DivisionEnrollmentService.getAvaiableUser();
+export async function getUserAvaiable(search: string) {
+  return (await DivisionEnrollmentService.getAvaiableUser()).filter(
+    (user) =>
+      user.fullname.toLowerCase().includes(search.toLowerCase()) ||
+      user.email.toLowerCase().includes(search.toLowerCase()) ||
+      user.uuid.toLowerCase().includes(search.toLowerCase())
+  );
 }
 
-export async function getUserAssigned(divisonid: number) {
-  return await DivisionEnrollmentService.getUsersByClassId(divisonid);
+export async function getUserAssigned(search: string, divisonid: number) {
+  return (await DivisionEnrollmentService.getUsersByClassId(divisonid)).filter(
+    (user) =>
+      user.fullname.toLowerCase().includes(search.toLowerCase()) ||
+      user.email.toLowerCase().includes(search.toLowerCase()) ||
+      user.uuid.toLowerCase().includes(search.toLowerCase())
+  );
 }
 
 export async function AddUserToClass(data: FormData) {
