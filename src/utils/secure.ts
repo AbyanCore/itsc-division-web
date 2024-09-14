@@ -1,4 +1,3 @@
-import { createHmac, hash } from "crypto";
 import { SECURITY_KEY, TIME_TOKEN_EXPIRED } from "@utils/constant";
 import { user_type } from "@prisma/client";
 
@@ -11,29 +10,62 @@ export type JwtModel = {
 };
 
 class Secure {
-  static hashPassword(password: string): string {
-    return hash("sha256", password);
+  static async hashPassword(password: string): Promise<string> {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+
+    // Convert hash buffer to hex string
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray
+      .map((b) => b.toString(16).padStart(2, "0"))
+      .join("");
+    return hashHex;
   }
 
-  static generateToken(
-    user_id: string,
+  static async generateToken(
+    userId: string,
     email: string,
     role: user_type
-  ): string {
+  ): Promise<string> {
     const header = JSON.stringify({ alg: "HS256", typ: "JWT" });
     const payload = JSON.stringify({
-      sub: user_id,
+      sub: userId,
       email: email,
       role: role,
       iat: Math.floor(Date.now() / 1000),
       exp: TIME_TOKEN_EXPIRED,
     } as JwtModel);
-    const encodedHeader = Buffer.from(header).toString("base64url");
-    const encodedPayload = Buffer.from(payload).toString("base64url");
 
-    const signature = createHmac("sha256", SECURITY_KEY)
-      .update(`${encodedHeader}.${encodedPayload}`)
-      .digest("base64url");
+    const encodedHeader = btoa(header)
+      .replace(/\+/g, "-")
+      .replace(/\//g, "_")
+      .replace(/=+$/, "");
+    const encodedPayload = btoa(payload)
+      .replace(/\+/g, "-")
+      .replace(/\//g, "_")
+      .replace(/=+$/, "");
+
+    const key = await crypto.subtle.importKey(
+      "raw",
+      new TextEncoder().encode(SECURITY_KEY),
+      { name: "HMAC", hash: "SHA-256" },
+      false,
+      ["sign"]
+    );
+
+    const signatureBuffer = await crypto.subtle.sign(
+      "HMAC",
+      key,
+      new TextEncoder().encode(`${encodedHeader}.${encodedPayload}`)
+    );
+
+    const signature = btoa(
+      String.fromCharCode(...new Uint8Array(signatureBuffer))
+    )
+      .replace(/\+/g, "-")
+      .replace(/\//g, "_")
+      .replace(/=+$/, "");
 
     return `${encodedHeader}.${encodedPayload}.${signature}`;
   }

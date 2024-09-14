@@ -156,17 +156,14 @@ async function main() {
     skipDuplicates: true,
     data: [
       {
-        id: 1,
         name: "Aplikasi",
         description: "Pelajaran Matematika",
       },
       {
-        id: 2,
         name: "SioT",
         description: "Pelajaran Fisika",
       },
       {
-        id: 3,
         name: "Web",
         description: "Pelajaran Kimia",
       },
@@ -180,7 +177,7 @@ async function main() {
     skipDuplicates: true,
     data: [
       {
-        division_id: 1,
+        division_id: 1,        
         user_uuid: "pen1",
       },
       {
@@ -221,21 +218,18 @@ async function main() {
     skipDuplicates: true,
     data: [
       {
-        id: 1,
         name: "Kehadiran Pertama",
         description: "Kehadiran Pertama",
         start_at: new Date(),
         end_at: new Date(Date.now() + 1000 * 60 * 60 * 24 * 2),
       },
       {
-        id: 2,
         name: "Kehadiran Kedua",
         description: "Kehadiran Kedua",
         start_at: new Date(Date.now() + 1000 * 60 * 60 * 24 * 2),
         end_at: new Date(Date.now() + 1000 * 60 * 60 * 24 * 6),
       },
       {
-        id: 3,
         name: "Kehadiran Ketiga",
         description: "Kehadiran Ketiga",
         start_at: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2),

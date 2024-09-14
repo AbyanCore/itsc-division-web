@@ -12,7 +12,6 @@ import {
   UserPlusIcon,
 } from "@heroicons/react/16/solid";
 import { user } from "@prisma/client";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function dashboardDivisionUsers({
@@ -62,12 +61,12 @@ export default async function dashboardDivisionUsers({
             <BackButton className="bg-red-500 flex-1 text-white font-bold py-2 px-4 rounded-md hover:bg-red-600 w-full">
               Back
             </BackButton>
-            <Link
+            <a
               href="/s/dashboard/users/create"
               className="bg-blue-500 text-white font-bold p-2.5 rounded-md hover:bg-blue-600"
             >
               <PlusIcon className="h-4 w-4" />
-            </Link>
+            </a>
           </div>
         </div>
         <table className="border table-auto w-full">

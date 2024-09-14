@@ -50,18 +50,38 @@ const dsahboardAttendancePage = async () => {
           className="p-1 px-3 rounded-md bg-green-200"
           action={makeAttendance}
         >
-          <input type="hidden" name="attendance_id" value={attendanceId} />
-          <input type="hidden" name="user_uuid" value={user!.uuid} />
-          <input type="hidden" name="type" value={attendance_type.hadir} />
+          <input
+            type="hidden"
+            id="attendance_id"
+            name="attendance_id"
+            value={attendanceId}
+          />
+          <input type="hidden" id="user_uuid" name="user_uuid" value={user!.uuid} />
+          <input type="hidden" id="type" name="type" value={attendance_type.hadir} />
           <button>Absen</button>
         </form>
         <form
           className="p-1 px-3 rounded-md bg-orange-200"
           action={makeAttendance}
         >
-          <input type="hidden" name="attendance_id" value={attendanceId} />
-          <input type="hidden" name="user_uuid" value={user!.uuid} />
-          <input type="hidden" name="type" value={attendance_type.izin} />
+          <input
+            type="hidden"
+            id="attendance_id"
+            name="attendance_id"
+            value={attendanceId}
+          />
+          <input
+            type="hidden"
+            id="user_uuid"
+            name="user_uuid"
+            value={user!.uuid}
+          />
+          <input
+            type="hidden"
+            id="type"
+            name="type"
+            value={attendance_type.izin}
+          />
           <button>Izin</button>
         </form>
       </div>

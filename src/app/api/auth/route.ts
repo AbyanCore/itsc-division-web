@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
   const user = await db.user.findFirst({
     where: {
       email: email,
-      password: Secure.hashPassword(password),
+      password: await Secure.hashPassword(password),
     },
   });
 
@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
 
   const res = NextResponse.json(
     {
-      token: Secure.generateToken(user.uuid, user.email, user.type),
+      token: await Secure.generateToken(user.uuid, user.email, user.type),
     },
     {
       status: 200,

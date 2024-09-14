@@ -1,12 +1,12 @@
 import { deleteUser, getUsers } from "@/serverAction/dashboardUserAction";
 import {
+  ArrowsUpDownIcon,
   MagnifyingGlassIcon,
   PencilIcon,
   PlusIcon,
   TrashIcon,
 } from "@heroicons/react/16/solid";
 import { user } from "@prisma/client";
-import Link from "next/link";
 import { redirect, RedirectType } from "next/navigation";
 
 const dashboardUsersPage = async ({
@@ -15,18 +15,32 @@ const dashboardUsersPage = async ({
   searchParams: {
     search: string;
     page: number;
+    reverse: number;
   };
 }) => {
   const search: string = searchParams.search ?? "";
   const page: number = searchParams.page ?? 1;
+  const reverse: number = searchParams.reverse ?? 0;
 
-  const users = (await getUsers(search, page)) as user[];
+  let users =
+    reverse == 1
+      ? ((await getUsers(search, page)) as user[]).reverse()
+      : ((await getUsers(search, page)) as user[]);
 
   async function handleSearch(data: FormData) {
     "use server";
 
     redirect(
       `/s/dashboard/users?page=${page}&search=${data.get("search")}`,
+      RedirectType.replace
+    );
+  }
+
+  async function handleReverse(data: FormData) {
+    "use server";
+
+    redirect(
+      `/s/dashboard/users?page=${page}&search=${search}&reverse=${reverse == 1 ? 0 : 1}`,
       RedirectType.replace
     );
   }
@@ -44,12 +58,19 @@ const dashboardUsersPage = async ({
             <MagnifyingGlassIcon className="h-4 w-4 text-white" />
           </button>
         </form>
-        <Link
-          href="/s/dashboard/users/create"
-          className="bg-blue-500 text-white font-bold p-2.5 rounded-md hover:bg-blue-600"
-        >
-          <PlusIcon className="h-4 w-4" />
-        </Link>
+        <div className="flex flex-row items-center gap-2">
+          <form action={handleReverse}>
+            <button className="bg-orange-500 text-white font-bold p-2.5 rounded-md hover:bg-orange-600">
+              <ArrowsUpDownIcon className="h-4 w-4" />
+            </button>
+          </form>
+          <a
+            href="/s/dashboard/users/create"
+            className="bg-blue-500 text-white font-bold p-2.5 rounded-md hover:bg-blue-600"
+          >
+            <PlusIcon className="h-4 w-4" />
+          </a>
+        </div>
       </div>
       <table className="w-full table-auto">
         <thead className="bg-slate-300">
@@ -82,13 +103,13 @@ const dashboardUsersPage = async ({
                 {user.update_at?.toLocaleDateString("id") ?? "-"}
               </td>
               <td className="border flex justify-center gap-2 p-1">
-                <Link
+                <a
                   type="submit"
                   href={`/s/dashboard/users/edit/${user.uuid}`}
                   className="bg-blue-500 text-white font-bold p-2 rounded hover:bg-blue-600"
                 >
                   <PencilIcon className="h-4 w-4" />
-                </Link>
+                </a>
                 <form action={deleteUser}>
                   <input type="hidden" name="uuid" value={user.uuid} />
                   <button
@@ -105,25 +126,25 @@ const dashboardUsersPage = async ({
       </table>
       <div className="flex flex-row gap-2 justify-center mt-2 items-center">
         {page > 1 && (
-          <Link
+          <a
             href={`/s/dashboard/users?page=${
               Number(page) - 1
             }&search=${search}`}
             className="bg-red-500 text-white font-bold py-2 px-3 rounded hover:bg-red-600"
           >
             prev
-          </Link>
+          </a>
         )}
         <p>{page}</p>
         {users.length >= 10 && (
-          <Link
+          <a
             href={`/s/dashboard/users?page=${
               Number(page) + 1
             }&search=${search}`}
             className="bg-blue-500 text-white font-bold py-2 px-3 rounded hover:bg-blue-600"
           >
             next
-          </Link>
+          </a>
         )}
       </div>
     </div>

@@ -4,10 +4,10 @@ import userAttendanceService from "@/service/userAttendanceService";
 import {
   ArrowRightEndOnRectangleIcon,
   PencilIcon,
+  PlusIcon,
   TrashIcon,
 } from "@heroicons/react/16/solid";
 import { attendance } from "@prisma/client";
-import Link from "next/link";
 
 const dashboardAttendanceManagePage = async () => {
   const attendances: attendance[] = await attendanceService.getAttendance();
@@ -19,7 +19,15 @@ const dashboardAttendanceManagePage = async () => {
 
   return (
     <div>
-      <h1>Manage Attendance</h1>
+      <div className="flex flex-row justify-between p-2">
+        <h1>Manage Attendance</h1>
+        <a
+          href={`/s/dashboard/attendance/manage/create`}
+          className="bg-blue-500 text-white font-bold p-2 rounded hover:bg-blue-600"
+        >
+          <PlusIcon className="h-4 w-4" />
+        </a>
+      </div>
       <table className="w-full table-auto">
         <thead className="bg-slate-300">
           <tr>
@@ -55,18 +63,18 @@ const dashboardAttendanceManagePage = async () => {
               </td>
               <td className="border">{getUsersAttendance(attendance.id)}</td>
               <td className="border flex justify-center gap-2 p-1">
-                <Link
+                <a
                   href={`/s/dashboard/attendance/manage/${attendance.id}/detail`}
                   className="bg-orange-500 text-white font-bold p-2 rounded hover:bg-orange-600"
                 >
                   <ArrowRightEndOnRectangleIcon className="h-4 w-4" />
-                </Link>
-                <Link
+                </a>
+                <a
                   href={`/s/dashboard/attendance/manage/${attendance.id}/edit`}
                   className="bg-blue-500 text-white font-bold p-2 rounded hover:bg-blue-600"
                 >
                   <PencilIcon className="h-4 w-4" />
-                </Link>
+                </a>
                 <form action={deleteAttendance}>
                   <input
                     type="hidden"

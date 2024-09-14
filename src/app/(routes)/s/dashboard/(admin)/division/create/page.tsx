@@ -1,7 +1,6 @@
 import BackButton from "@/component/BackButton";
 import { createDivision } from "@/server-action/dashboardDivisionAction";
 import userService from "@/service/userService";
-import Link from "next/link";
 
 export default async function dashboardUserCreatePage() {
   const getPengajar = await userService.getPengajar("all");

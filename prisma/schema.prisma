@@ -1,81 +1,81 @@
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
 model attendance {
-  id              Int               @id @default(autoincrement())
-  name            String            @db.VarChar(100)
-  description     String?           @db.VarChar(255)
-  start_at        DateTime          @db.Timestamp(6)
-  end_at          DateTime          @db.Timestamp(6)
-  create_at       DateTime          @default(now()) @db.Timestamp(6)
-  user_attendance user_attendance[]
+    id              Int               @id @default(autoincrement())
+    name            String            @db.VarChar(100)
+    description     String?           @db.VarChar(255)
+    start_at        DateTime          @db.Timestamp(6)
+    end_at          DateTime          @db.Timestamp(6)
+    create_at       DateTime          @default(now()) @db.Timestamp(6)
+    user_attendance user_attendance[]
 }
 
 model division {
-  id                  Int                   @id @default(autoincrement())
-  name                String                @db.VarChar(50)
-  description         String                @db.VarChar(255)
-  division_leader     String?               @db.VarChar(100)
-  create_at           DateTime              @default(now()) @db.Timestamp(6)
-  update_At           DateTime?             @updatedAt @db.Timestamp(6)
-  user                user?                 @relation(fields: [division_leader], references: [uuid], onDelete: SetNull, onUpdate: NoAction)
-  division_enrollment division_enrollment[]
+    id                  Int                   @id @default(autoincrement())
+    name                String                @db.VarChar(50)
+    description         String                @db.VarChar(255)
+    division_leader     String?               @db.VarChar(100)
+    create_at           DateTime              @default(now()) @db.Timestamp(6)
+    update_At           DateTime?             @updatedAt @db.Timestamp(6)
+    user                user?                 @relation(fields: [division_leader], references: [uuid], onDelete: SetNull, onUpdate: NoAction)
+    division_enrollment division_enrollment[]
 }
 
 model division_enrollment {
-  user_uuid   String   @db.VarChar(100)
-  division_id Int
-  create_at   DateTime @default(now()) @db.Timestamp(6)
-  division    division @relation(fields: [division_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  user        user     @relation(fields: [user_uuid], references: [uuid], onDelete: Cascade, onUpdate: NoAction)
+    user_uuid   String   @db.VarChar(100)
+    division_id Int
+    create_at   DateTime @default(now()) @db.Timestamp(6)
+    division    division @relation(fields: [division_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+    user        user     @relation(fields: [user_uuid], references: [uuid], onDelete: Cascade, onUpdate: NoAction)
 
-  @@id([user_uuid, division_id])
+    @@id([user_uuid, division_id])
 }
 
 model user {
-  uuid                String                @id @default(uuid()) @db.VarChar(100)
-  fullname            String                @db.VarChar(100)
-  surname             String                @db.VarChar(50)
-  address             String                @db.VarChar(255)
-  email               String                @unique @db.VarChar(50)
-  phone_number        String                @unique @db.VarChar(50)
-  password            String                @db.VarChar(255)
-  type                user_type             @default(guest)
-  create_at           DateTime              @default(now()) @db.Timestamp(6)
-  update_at           DateTime?             @updatedAt @db.Timestamp(6)
-  division            division[]
-  division_enrollment division_enrollment[]
-  user_attendance     user_attendance[]
+    uuid                String                @id @default(uuid()) @db.VarChar(100)
+    fullname            String                @db.VarChar(100)
+    surname             String                @db.VarChar(50)
+    address             String                @db.VarChar(255)
+    email               String                @unique @db.VarChar(50)
+    phone_number        String                @unique @db.VarChar(50)
+    password            String                @db.VarChar(255)
+    type                user_type             @default(guest)
+    create_at           DateTime              @default(now()) @db.Timestamp(6)
+    update_at           DateTime?             @updatedAt @db.Timestamp(6)
+    division            division[]
+    division_enrollment division_enrollment[]
+    user_attendance     user_attendance[]
 }
 
 model user_attendance {
-  attendance_id   Int
-  user_uuid       String           @db.VarChar(100)
-  attendance_type attendance_type? @default(tanpa_keterangan)
-  create_at       DateTime         @default(now()) @db.Timestamp(6)
-  attendance      attendance       @relation(fields: [attendance_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  user            user             @relation(fields: [user_uuid], references: [uuid], onDelete: Cascade, onUpdate: NoAction)
+    attendance_id   Int
+    user_uuid       String           @db.VarChar(100)
+    attendance_type attendance_type? @default(tanpa_keterangan)
+    create_at       DateTime         @default(now()) @db.Timestamp(6)
+    attendance      attendance       @relation(fields: [attendance_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+    user            user             @relation(fields: [user_uuid], references: [uuid], onDelete: Cascade, onUpdate: NoAction)
 
-  @@id([attendance_id, user_uuid])
+    @@id([attendance_id, user_uuid])
 }
 
 enum attendance_type {
-  hadir
-  pulang
-  sakit
-  izin
-  tanpa_keterangan @map("tanpa keterangan")
+    hadir
+    pulang
+    sakit
+    izin
+    tanpa_keterangan @map("tanpa keterangan")
 }
 
 enum user_type {
-  admin
-  pengajar
-  siswa
-  guest
+    admin
+    pengajar
+    siswa
+    guest
 }

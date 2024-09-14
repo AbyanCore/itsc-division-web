@@ -11,7 +11,7 @@ const BackButton = ({
 }) => {
   const router = useRouter();
   return (
-    <button className={className} onClick={() => router.back()}>
+    <button type="button" className={className} onClick={() => router.back()}>
       {children}
     </button>
   );

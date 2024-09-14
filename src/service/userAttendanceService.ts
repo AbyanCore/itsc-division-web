@@ -18,11 +18,73 @@ class userAttendanceService {
   }
 
   static async getAttendancesById(attendanceId: number) {
-    const data = await db.user_attendance.findMany({
+    const data = await db.user.findMany({
       where: {
-        attendance_id: attendanceId,
+        user_attendance: {
+          some: {
+            attendance_id: attendanceId,
+          },
+        },
+      },
+      include: {
+        user_attendance: {
+          where: {
+            attendance_id: attendanceId,
+          },
+          select: {
+            attendance_type: true,
+          },
+        },
+        division_enrollment: {
+          include: {
+            division: {
+              select: {
+                name: true,
+              }
+            }
+          }
+        }
+      }
+    });
+
+    return data;
+  }
+
+  static async getunAttendancesById(attendanceId: number) {
+    const data = await db.user.findMany({
+      where: {
+        user_attendance: {
+          none: {
+            attendance_id: attendanceId,
+          },
+        },
+        AND: {
+          division_enrollment: {
+            some: {}
+          }
+        }
+      },
+      include: {
+        user_attendance: {
+          where: {
+            attendance_id: attendanceId,
+          },
+          select: {
+            attendance_type: true,
+          },
+        },
+        division_enrollment: {
+          include: {
+            division: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
       },
     });
+
     return data;
   }
 

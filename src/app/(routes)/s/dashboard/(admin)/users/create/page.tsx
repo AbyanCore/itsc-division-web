@@ -1,8 +1,7 @@
 import BackButton from "@/component/BackButton";
 import { createUser } from "@/server-action/dashboardUserAction";
-import Link from "next/link";
 
-export default function dashboardUserCreatePage() {
+export default async function dashboardUserCreatePage() {
   return (
     <div className="w-screen h-screen">
       <h1 className="font-bold text-2xl w-full text-center">Create User</h1>

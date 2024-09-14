@@ -1,6 +1,6 @@
 {
   "name": "itsc-division-web",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
@@ -22,14 +22,17 @@
     "next": "14.2.5",
     "prisma": "^5.18.0",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "scheduler": "^0.23.2",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^20.14.15",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.41",
+    "tailwindcss": "^3.4.10",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
   }
