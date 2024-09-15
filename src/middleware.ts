@@ -9,8 +9,16 @@ export default async function middleware(req: NextRequest) {
   const isVerify = await Secure.verifyToken(token?.value);
   const isAdmin = Secure.IsAdmin(token?.value);
 
+  // verify token
+  if (!isVerify) {
+    req.cookies.delete("token");
+  }
+
   // secure
-  if (path.startsWith("/s") && !(await Secure.verifyToken(token?.value))) {
+  if (
+    (path.startsWith("/s") || path.startsWith("/api/s")) &&
+    !(await Secure.verifyToken(token?.value))
+  ) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
@@ -24,7 +32,7 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/s/dashboard", req.url));
   }
 
-  if (path.startsWith("/login") && (await Secure.verifyToken(token?.value))) {
+  if (path.startsWith("/login") && isVerify) {
     return NextResponse.redirect(new URL("/s", req.url));
   }
 

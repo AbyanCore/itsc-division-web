@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function HomePage() {
   return (
     <main className="bg-gray-100">
@@ -7,18 +9,18 @@ export default function HomePage() {
           <h1 className="text-2xl font-bold">ITSC Division</h1>
           <nav>
             <ul className="flex gap-4 items-center">
-              <a
+              <Link
                 className="text-black rounded-md bg-white px-2 py-1"
                 href="/login"
               >
                 Login
-              </a>
-              <a className="hover:text-blue-200" href="#">
+              </Link>
+              <Link className="hover:text-blue-200" href="#">
                 Home
-              </a>
-              <a href="/contact" className="hover:text-blue-200">
+              </Link>
+              <Link href="/contact" className="hover:text-blue-200">
                 Contact
-              </a>
+              </Link>
             </ul>
           </nav>
         </div>

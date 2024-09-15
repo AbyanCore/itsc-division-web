@@ -33,18 +33,20 @@ class userAttendanceService {
           },
           select: {
             attendance_type: true,
+            create_at: true,
           },
         },
         division_enrollment: {
           include: {
             division: {
               select: {
+                id: true,
                 name: true,
-              }
-            }
-          }
-        }
-      }
+              },
+            },
+          },
+        },
+      },
     });
 
     return data;
@@ -60,9 +62,9 @@ class userAttendanceService {
         },
         AND: {
           division_enrollment: {
-            some: {}
-          }
-        }
+            some: {},
+          },
+        },
       },
       include: {
         user_attendance: {
@@ -71,6 +73,7 @@ class userAttendanceService {
           },
           select: {
             attendance_type: true,
+            create_at: true,
           },
         },
         division_enrollment: {

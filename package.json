@@ -1,6 +1,6 @@
 {
   "name": "itsc-division-web",
-  "version": "0.1.7",
+  "version": "0.1.9",
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
@@ -19,6 +19,7 @@
     "@types/cors": "^2.8.17",
     "axios": "^1.7.3",
     "cors": "^2.8.5",
+    "csv": "^6.3.10",
     "next": "14.2.5",
     "prisma": "^5.18.0",
     "react": "^18",

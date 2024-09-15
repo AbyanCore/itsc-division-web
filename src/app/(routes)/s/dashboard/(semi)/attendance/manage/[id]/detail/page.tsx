@@ -1,8 +1,8 @@
 import BackButton from "@/component/BackButton";
-import DivisionEnrollmentService from "@/service/divisionEnrollmentService";
-import divisionService from "@/service/divisionService";
+import attendanceService from "@/service/attendanceService";
 import userAttendanceService from "@/service/userAttendanceService";
-import userService from "@/service/userService";
+import { time3Offset, timeDifference } from "@/utils/time";
+import { DocumentArrowUpIcon } from "@heroicons/react/16/solid";
 
 const dashboardAttendanceManageDetailPage = async ({
   params,
@@ -12,21 +12,9 @@ const dashboardAttendanceManageDetailPage = async ({
   const users = await userAttendanceService.getAttendancesById(
     Number.parseInt(params.id)
   );
-
   const users_non_attendance = await userAttendanceService.getunAttendancesById(
     Number.parseInt(params.id)
   );
-
-  // async function getUser(uuid: string) {
-  //   return await userService.getUserById(uuid);
-  // }
-
-  // async function getDivision(user_uuid: string) {
-  //   return await divisionService.getDivisionById(
-  //     (await DivisionEnrollmentService.getClassEnrollmentByUserUuid(user_uuid))!
-  //       .division_id
-  //   );
-  // }
 
   return (
     <div>
@@ -35,7 +23,12 @@ const dashboardAttendanceManageDetailPage = async ({
           Back
         </BackButton>
         <h1>Manage Attendance Detail {params.id}</h1>
-        <span>.</span>
+        <a
+          href={`/api/s/attendance/${params.id}/export`}
+          className="text-white bg-orange-400 p-2 rounded-md"
+        >
+          <DocumentArrowUpIcon className="w-4 h-4" />
+        </a>
       </div>
       <table className="w-full table-auto">
         <thead className="bg-slate-300">
@@ -67,7 +60,9 @@ const dashboardAttendanceManageDetailPage = async ({
                   {attendance_user.division_enrollment.pop()?.division.name}
                 </td>
                 <td className="border">
-                  {attendance_user.create_at.toLocaleDateString("id")}
+                  {attendance_user.create_at.toLocaleString("id-ID", {
+                    timeZone: "Asia/Jakarta",
+                  })}
                 </td>
               </tr>
             );
@@ -83,14 +78,14 @@ const dashboardAttendanceManageDetailPage = async ({
                 </td>
                 <td className="border">{attendance_user.fullname}</td>
                 <td className="border">{attendance_user.email}</td>
-                <td className="border">
-                  NULL
-                </td>
+                <td className="border">NULL</td>
                 <td className="border">
                   {attendance_user.division_enrollment.pop()?.division.name}
                 </td>
                 <td className="border">
-                  {attendance_user.create_at.toLocaleDateString("id")}
+                  {attendance_user.create_at.toLocaleString("id-ID", {
+                    timeZone: "Asia/Jakarta",
+                  })}
                 </td>
               </tr>
             );

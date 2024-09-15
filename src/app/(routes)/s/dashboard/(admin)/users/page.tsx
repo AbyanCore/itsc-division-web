@@ -7,6 +7,7 @@ import {
   TrashIcon,
 } from "@heroicons/react/16/solid";
 import { user } from "@prisma/client";
+import Link from "next/link";
 import { redirect, RedirectType } from "next/navigation";
 
 const dashboardUsersPage = async ({
@@ -126,25 +127,25 @@ const dashboardUsersPage = async ({
       </table>
       <div className="flex flex-row gap-2 justify-center mt-2 items-center">
         {page > 1 && (
-          <a
+          <Link
             href={`/s/dashboard/users?page=${
               Number(page) - 1
             }&search=${search}`}
             className="bg-red-500 text-white font-bold py-2 px-3 rounded hover:bg-red-600"
           >
             prev
-          </a>
+          </Link>
         )}
         <p>{page}</p>
         {users.length >= 10 && (
-          <a
+          <Link
             href={`/s/dashboard/users?page=${
               Number(page) + 1
             }&search=${search}`}
             className="bg-blue-500 text-white font-bold py-2 px-3 rounded hover:bg-blue-600"
           >
             next
-          </a>
+          </Link>
         )}
       </div>
     </div>

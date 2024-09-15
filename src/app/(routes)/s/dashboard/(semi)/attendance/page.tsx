@@ -4,6 +4,7 @@ import DivisionEnrollmentService from "@/service/divisionEnrollmentService";
 import divisionService from "@/service/divisionService";
 import userAttendanceService from "@/service/userAttendanceService";
 import userService from "@/service/userService";
+import { time3Difference } from "@/utils/time";
 import { attendance, attendance_type, division } from "@prisma/client";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -56,8 +57,18 @@ const dsahboardAttendancePage = async () => {
             name="attendance_id"
             value={attendanceId}
           />
-          <input type="hidden" id="user_uuid" name="user_uuid" value={user!.uuid} />
-          <input type="hidden" id="type" name="type" value={attendance_type.hadir} />
+          <input
+            type="hidden"
+            id="user_uuid"
+            name="user_uuid"
+            value={user!.uuid}
+          />
+          <input
+            type="hidden"
+            id="type"
+            name="type"
+            value={attendance_type.hadir}
+          />
           <button>Absen</button>
         </form>
         <form
