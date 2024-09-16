@@ -39,6 +39,19 @@ class attendanceService {
       },
     });
   }
+
+  static async getActiveAttendance() {
+    return await db.attendance.findFirst({
+      where: {
+        start_at: {
+          lte: new Date(),
+        },
+        end_at: {
+          gte: new Date(),
+        },
+      },
+    });
+  }
 }
 
 export default attendanceService;

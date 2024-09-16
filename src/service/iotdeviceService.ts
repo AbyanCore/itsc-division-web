@@ -1,5 +1,6 @@
 import db from "@/utils/db";
 import { Prisma } from "@prisma/client";
+import { randomUUID } from "crypto";
 
 class iotdeviceService {
   static async getIotDevices() {
@@ -21,6 +22,17 @@ class iotdeviceService {
       },
     });
     return result;
+  }
+
+  static async regernerateToken(device_id: number) {
+    const result = await db.iot_device.update({
+      where: {
+        id: device_id,
+      },
+      data: {
+        token: randomUUID(),
+      },
+    });
   }
 }
 
