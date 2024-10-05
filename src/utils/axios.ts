@@ -6,6 +6,7 @@ const axiosGlobal = ax.create({
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true,
 });
 
 export default axiosGlobal;

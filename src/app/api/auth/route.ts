@@ -1,3 +1,4 @@
+import { TIME_TOKEN_EXPIRED } from "@/utils/constant";
 import db from "@/utils/db";
 import Secure from "@/utils/secure";
 import { NextRequest, NextResponse } from "next/server";
@@ -6,14 +7,11 @@ export async function POST(req: NextRequest) {
   const { email, password } = await req.json();
 
   console.log(
-    "LOGIN LOGGER",
-    `
-    email: ${email},
-    password: ${Secure.hashPassword(password!)},
-    user-agent: ${req.headers.get("user-agent")},
-    ip-address: ${req.headers.get("x-forwarded-for") || "unknown"}, 
-    referer: ${req.headers.get("referer") || "unknown"}
-    `
+    `LOGIN LOGGER :
+      - EMAIL : ${email}
+      - PASSWORD : ${(await Secure.hashPassword(password!)).toString()}
+      - USER-AGENT : ${req.headers.get("user-agent")}
+      - IP-ADDRESS : ${req.headers.get("x-forwarded-for") || "unknown"}`
   );
 
   if (!email || !password) {
@@ -34,15 +32,22 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: "Login Failed" }, { status: 400 });
   }
 
+  const token = await Secure.generateToken(user.uuid, user.email, user.type);
   const res = NextResponse.json(
     {
-      token: await Secure.generateToken(user.uuid, user.email, user.type),
+      token: token,
     },
     {
       status: 200,
       statusText: "OK",
     }
   );
+
+  res.cookies.set({
+    name: "token",
+    value: token,
+    maxAge: TIME_TOKEN_EXPIRED,
+  });
 
   return res;
 }

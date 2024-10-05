@@ -76,7 +76,7 @@ export async function GET(req: NextRequest, context: any) {
           }
         }
       );
-    });
+    }) as Promise<NextResponse>;
   } catch (error) {
     console.error("Error fetching attendance data:", error);
     return NextResponse.json(

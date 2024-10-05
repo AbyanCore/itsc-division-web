@@ -97,7 +97,7 @@ class Secure {
         new TextEncoder().encode(`${encodedHeader}.${encodedPayload}`)
       );
 
-      return isValid && payload.exp > Date.now() / 1000;
+      return isValid && payload.exp > Math.floor(Date.now() / 1000);
     } catch (error) {
       console.error("Error verifying token:", error);
       return false;

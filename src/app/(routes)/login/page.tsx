@@ -1,7 +1,7 @@
 "use client";
 
 import { TIME_TOKEN_EXPIRED } from "@/utils/constant";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const LoginPage = ({ searchParams }: { searchParams?: any }) => {
   const router = useRouter();
@@ -18,15 +18,15 @@ const LoginPage = ({ searchParams }: { searchParams?: any }) => {
         "Content-Type": "application/json",
       },
       method: "POST",
-      credentials: "include",
     }).then(async (res) => {
       const data = await res.json();
 
       if (res.status == 200) {
-        document.cookie = `token=${data.token}; path=/; max-age=${TIME_TOKEN_EXPIRED};`;
-        router.push("/s");
+        router.push(searchParams.redirectTo || "/s");
       } else {
-        router.push(`/login?error=${data.message}`);
+        router.push(
+          `/login?redirectTo=${searchParams.redirectTo}&error=${data.message}`
+        );
       }
     });
   }
@@ -42,9 +42,9 @@ const LoginPage = ({ searchParams }: { searchParams?: any }) => {
         action={handleSubmit}
       >
         <h1 className="text-black font-bold text-3xl mb-2">Sign In </h1>
-        <p className="text-red-500 text-xs italic">
+        <small className="text-red-500 italic">
           {searchParams.error != null ? searchParams.error : ""}
-        </p>
+        </small>
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
