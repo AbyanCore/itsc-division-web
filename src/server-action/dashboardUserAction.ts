@@ -3,8 +3,7 @@
 import userService from "@/service/userService";
 import filter from "@/utils/filter";
 import Secure from "@/utils/secure";
-import { Prisma, user, user_type } from "@prisma/client";
-import e from "cors";
+import { Prisma, user_type } from "@prisma/client";
 import { redirect, RedirectType } from "next/navigation";
 import { z } from "zod";
 
@@ -52,15 +51,15 @@ const userUpdate = z.object(
   }
 );
 
-// execution function 
+// execution function
 
 export async function getUsers(search: string, page: number) {
   const data = await userService.getUserFilter(
     {
       OR: [
-        { email: { contains: search } },
-        { uuid: { contains: search } },
-        { fullname: { contains: search } },
+        { email: { contains: search, mode: "insensitive" } },
+        { uuid: { contains: search, mode: "insensitive" } },
+        { fullname: { contains: search, mode: "insensitive" } },
       ],
     },
     (page - 1) * 10,
@@ -100,7 +99,7 @@ export async function getUser(uuid: string) {
 
 export async function deleteUser(data: FormData) {
   const validate = z.string().safeParse(data.get("uuid"));
-  
+
   if (!validate.success) return console.error(validate.error);
   const res = validate.data;
 

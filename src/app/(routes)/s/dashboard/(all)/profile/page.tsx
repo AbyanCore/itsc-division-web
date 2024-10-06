@@ -15,22 +15,29 @@ const dashboardProfilePage = () => {
   }
 
   return (
-    <div className="w-full h-full flex flex-col justify-center items-center">
-      <div className="p-5 shadow-md rounded-xl">
-        <h1>Email : {email}</h1>
-        <h2>Id : {sub}</h2>
-        <div className="flex flex-row gap-1 w-full">
-          <form action={logout}>
+    <div className="w-full h-full flex flex-col justify-center items-center bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+      <div className="p-6 shadow-lg rounded-xl bg-white dark:bg-gray-800 transition-all">
+        <img
+          src="/default_profile.jpeg"
+          alt="Profile Picture"
+          className="aspect-square w-60 rounded-md mb-4 object-cover"
+        />
+        <h1 className="text-lg font-bold">{email}</h1>
+        <small className="text-md font-semibold text-gray-600 dark:text-gray-300 blur-sm hover:blur-0 duration-300">
+          {sub}
+        </small>
+        <div className="flex flex-row gap-3 w-full mt-3">
+          <form action={logout} className="flex-1">
             <button
               type="submit"
-              className="bg-red-500 text-white p-2 rounded-md flex-1 text-center"
+              className="bg-red-500 text-white py-2 px-4 rounded-md w-full text-center font-bold hover:bg-red-600 transition-all"
             >
               Logout
             </button>
           </form>
           <a
             href="/s/dashboard/profile/edit"
-            className="bg-orange-500 p-2 rounded-md text-white flex-1 text-center"
+            className="bg-orange-500 text-white py-2 px-4 rounded-md w-full text-center font-bold hover:bg-orange-600 transition-all"
           >
             Edit
           </a>

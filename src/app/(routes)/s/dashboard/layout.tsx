@@ -13,7 +13,7 @@ export default async function DashboardLayout({
   return (
     <main className="flex flex-row w-screen h-screen">
       <SidebarDashboard IsAdmin={isAdmin} />
-      <div className="w-full h-full">{children}</div>
+      <div className="w-full h-full overflow-auto">{children}</div>
     </main>
   );
 }

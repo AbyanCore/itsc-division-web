@@ -7,6 +7,13 @@ class divisionService {
     return data;
   }
 
+  static async getDivisionFilter(where: Prisma.divisionWhereInput) {
+    const data = await db.division.findMany({
+      where,
+    });
+    return data;
+  }
+
   static async getDivisionById(id: number) {
     const data = await db.division.findUnique({
       where: {

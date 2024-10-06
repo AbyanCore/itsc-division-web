@@ -11,18 +11,24 @@ import { z } from "zod";
 const divisionPost = z.object({
   name: z.string().min(1),
   description: z.string().optional(),
-})
+});
 
 const divisionPut = z.object({
   id: z.coerce.number().positive().int(),
   name: z.string().min(1).optional(),
   description: z.string().optional(),
-})
+});
 
 // execution function
 
-export async function getDivisions() {
-  const data = await divisionService.getDivision();
+export async function getDivisions(search: string, page: number) {
+  const data = await divisionService.getDivisionFilter({
+    OR: [
+      { name: { contains: search, mode: "insensitive" } },
+      { description: { contains: search, mode: "insensitive" } },
+    ],
+  });
+
   return data;
 }
 
@@ -31,8 +37,8 @@ export async function getDivision(id: number) {
   return data;
 }
 
-export async function deleteDivision(id: number) {
-  const validate = z.number().positive().int().safeParse(id);
+export async function deleteDivision(data: FormData) {
+  const validate = z.number().positive().int().safeParse(data.get("id"));
 
   if (!validate.success) return console.error(validate.error);
   const res = validate.data;
@@ -55,7 +61,7 @@ export async function createDivision(data: FormData) {
 }
 
 export async function updateDivision(data: FormData) {
-  const validate = filter.dataValidation(divisionPut,{
+  const validate = filter.dataValidation(divisionPut, {
     id: data.get("id"),
     name: data.get("name"),
     description: data.get("description"),
@@ -64,10 +70,7 @@ export async function updateDivision(data: FormData) {
   if (!validate.success) return console.error(validate.error);
   const res = validate.data as Prisma.divisionUpdateInput;
 
-  await divisionService.updateDivision(
-    validate.data.id,
-    res
-  );
+  await divisionService.updateDivision(validate.data.id, res);
 
   redirect("/s/dashboard/division");
 }

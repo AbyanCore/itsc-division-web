@@ -18,81 +18,101 @@ const dashboardAttendanceManagePage = async () => {
   }
 
   return (
-    <div>
-      <div className="flex flex-row justify-between p-2">
-        <h1>Manage Attendance</h1>
+    <div className="w-full h-full bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+      <div className="flex flex-col sm:flex-row justify-between items-center px-4 py-4">
+        <h1 className="text-lg font-bold">Manage Attendance</h1>
         <a
           href={`/s/dashboard/attendance/manage/create`}
-          className="bg-blue-500 text-white font-bold p-2 rounded hover:bg-blue-600"
+          className="bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-bold p-2.5 rounded-md"
         >
           <PlusIcon className="h-4 w-4" />
         </a>
       </div>
-      <table className="w-full table-auto">
-        <thead className="bg-slate-300">
-          <tr>
-            <th className="border">id</th>
-            <th className="border">Name</th>
-            <th className="border">Create at</th>
-            <th className="border">Time Span</th>
-            <th className="border">Sum</th>
-            <th className="border">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {attendances.map((attendance: attendance) => (
-            <tr
-              key={attendance.id}
-              className="border-t hover:bg-gray-300 text-center transition-colors"
-            >
-              <td className="border">{attendance.id}</td>
-              <td className="border">{attendance.name}</td>
-              <td className="border">
-                {attendance.create_at.toLocaleDateString("id-ID")}
-              </td>
-              <td className="border">
-                {attendance.start_at.toLocaleTimeString("id-ID", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-                {" - "}
-                {attendance.end_at.toLocaleTimeString("id-ID", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </td>
-              <td className="border">{getUsersAttendance(attendance.id)}</td>
-              <td className="border flex justify-center gap-2 p-1">
-                <a
-                  href={`/s/dashboard/attendance/manage/${attendance.id}/detail`}
-                  className="bg-orange-500 text-white font-bold p-2 rounded hover:bg-orange-600"
-                >
-                  <ArrowRightEndOnRectangleIcon className="h-4 w-4" />
-                </a>
-                <a
-                  href={`/s/dashboard/attendance/manage/${attendance.id}/edit`}
-                  className="bg-blue-500 text-white font-bold p-2 rounded hover:bg-blue-600"
-                >
-                  <PencilIcon className="h-4 w-4" />
-                </a>
-                <form action={deleteAttendance}>
-                  <input
-                    type="hidden"
-                    name="attendance_id"
-                    value={attendance.id}
-                  />
-                  <button
-                    type="submit"
-                    className="bg-red-500 text-white font-bold p-2 rounded hover:bg-red-600"
-                  >
-                    <TrashIcon className="h-4 w-4" />
-                  </button>
-                </form>
-              </td>
+      <div className="overflow-x-auto shadow-md sm:rounded-lg mx-4">
+        <table className="w-full text-sm text-left">
+          <thead className="text-xs uppercase bg-gray-100 dark:bg-gray-700">
+            <tr>
+              <th scope="col" className="px-4 py-3 sm:px-6">
+                ID
+              </th>
+              <th scope="col" className="px-4 py-3 sm:px-6">
+                Name
+              </th>
+              <th scope="col" className="px-4 py-3 sm:px-6">
+                Created At
+              </th>
+              <th scope="col" className="px-4 py-3 sm:px-6">
+                Time Span
+              </th>
+              <th scope="col" className="px-4 py-3 sm:px-6">
+                Sum
+              </th>
+              <th scope="col" className="px-4 py-3 sm:px-6">
+                Action
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {attendances.map((attendance: attendance) => (
+              <tr
+                key={attendance.id}
+                className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+              >
+                <td className="px-4 py-4 sm:px-6 font-medium whitespace-nowrap">
+                  {attendance.id}
+                </td>
+                <td className="px-4 py-4 sm:px-6">{attendance.name}</td>
+                <td className="px-4 py-4 sm:px-6">
+                  {attendance.create_at.toLocaleDateString("id-ID")}
+                </td>
+                <td className="px-4 py-4 sm:px-6">
+                  {attendance.start_at.toLocaleTimeString("id-ID", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}{" "}
+                  -{" "}
+                  {attendance.end_at.toLocaleTimeString("id-ID", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </td>
+                <td className="px-4 py-4 sm:px-6">
+                  {getUsersAttendance(attendance.id)}
+                </td>
+                <td className="px-4 py-4 sm:px-6">
+                  <div className="flex items-center space-x-2 justify-stretch">
+                    <a
+                      href={`/s/dashboard/attendance/manage/${attendance.id}/detail`}
+                      className="bg-orange-500 hover:bg-orange-600 dark:bg-orange-600 dark:hover:bg-orange-700 text-white font-bold p-2.5 rounded-md"
+                    >
+                      <ArrowRightEndOnRectangleIcon className="h-4 w-4" />
+                    </a>
+                    <a
+                      href={`/s/dashboard/attendance/manage/${attendance.id}/edit`}
+                      className="bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-bold p-2.5 rounded-md"
+                    >
+                      <PencilIcon className="h-4 w-4" />
+                    </a>
+                    <form action={deleteAttendance}>
+                      <input
+                        type="hidden"
+                        name="attendance_id"
+                        value={attendance.id}
+                      />
+                      <button
+                        type="submit"
+                        className="bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700 text-white font-bold p-2.5 rounded-md"
+                      >
+                        <TrashIcon className="h-4 w-4" />
+                      </button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

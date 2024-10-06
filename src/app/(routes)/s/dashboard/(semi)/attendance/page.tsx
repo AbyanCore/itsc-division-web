@@ -48,7 +48,7 @@ const dsahboardAttendancePage = async () => {
     return (
       <div className="flex flex-row gap-2">
         <form
-          className="p-1 px-3 rounded-md bg-green-200"
+          className="p-1 px-3 rounded-md bg-green-500 hover:bg-green-600 text-white transition-all"
           action={makeAttendance}
         >
           <input
@@ -69,10 +69,10 @@ const dsahboardAttendancePage = async () => {
             name="type"
             value={attendance_type.hadir}
           />
-          <button>Absen</button>
+          <button type="submit">Absen</button>
         </form>
         <form
-          className="p-1 px-3 rounded-md bg-orange-200"
+          className="ml-10 p-1 px-3 rounded-md bg-orange-500 hover:bg-orange-600 text-white transition-all"
           action={makeAttendance}
         >
           <input
@@ -93,36 +93,42 @@ const dsahboardAttendancePage = async () => {
             name="type"
             value={attendance_type.izin}
           />
-          <button>Izin</button>
+          <button type="submit">Izin</button>
         </form>
       </div>
     );
   }
 
   return (
-    <div className="w-full h-full">
-      <div className="font-bold text-xl p-3">Divisi {division?.name}</div>
-      <div className="flex flex-col gap-3 p-2">
+    <div className="w-full h-full bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+      <div className="font-bold text-2xl p-4  rounded-md">
+        Divisi {division?.name}
+      </div>
+      <div className="flex flex-col gap-4 p-4">
         {attendances.reverse().map((attendance) => (
           <div
             key={attendance.id}
-            className="w-full bg-zinc-50 p-3 rounded-xl shadow-md hover:bg-zinc-200 transition-colors duration-150"
+            className="bg-zinc-50 dark:bg-gray-800 p-4 rounded-xl shadow-lg hover:bg-zinc-200 dark:hover:bg-gray-700 transition-colors duration-150"
           >
-            <h1 className="font-bold text-lg">{attendance.name}</h1>
-            <p className="font-mono">{attendance.description}</p>
-            <time className="font-thin">
+            <h1 className="font-bold text-lg text-gray-800 dark:text-gray-100">
+              {attendance.name}
+            </h1>
+            <p className="font-mono text-gray-600 dark:text-gray-400 mb-1">
+              {attendance.description}
+            </p>
+            {checkAttendance(attendance.id)}
+            <time className="block font-thin text-sm text-gray-500 dark:text-gray-400 -mt-3 text-end">
               {new Date().toLocaleDateString("id-ID")}{" "}
               {attendance.start_at.toLocaleTimeString("id-ID", {
                 hour: "2-digit",
                 minute: "2-digit",
-              })}
-              {" - "}
+              })}{" "}
+              -{" "}
               {attendance.end_at.toLocaleTimeString("id-ID", {
                 hour: "2-digit",
                 minute: "2-digit",
               })}
             </time>
-            {checkAttendance(attendance.id)}
           </div>
         ))}
       </div>
