@@ -19,13 +19,12 @@ const DashboardDevicePage = async ({ searchParams }: { searchParams: any }) => {
   const error = searchParams.error;
 
   return (
-    <div className="w-full h-full dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-4">
+    <div className="w-full h-[100vh] sm:h-full dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-4">
       <div className="flex flex-row justify-between items-center mb-6">
         <div className="flex items-center gap-2">
           <BackButton className="bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md">
             Back
           </BackButton>
-          <h1 className="text-xl font-bold">Device List</h1>
         </div>
         <form action={createIotDevice} className="flex items-center gap-2">
           <input

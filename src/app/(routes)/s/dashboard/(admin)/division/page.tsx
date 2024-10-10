@@ -53,7 +53,7 @@ const dashboardDivisionsPage = async ({
   }
 
   return (
-    <div className="w-full h-full bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <div className="w-full h-[100vh] sm:h-full bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       <div className="flex flex-col sm:flex-row justify-between items-center px-4 py-4">
         <form action={handleSearch} className="flex items-center">
           <input

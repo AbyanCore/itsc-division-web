@@ -6,11 +6,8 @@ export default function ContactLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
-        {children}
-        <FooterGlobal />
-      </body>
-    </html>
+    <main lang="en">
+      <div>{children}</div>
+    </main>
   );
 }

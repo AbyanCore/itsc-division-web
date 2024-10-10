@@ -11,9 +11,9 @@ export default async function DashboardLayout({
   const isAdmin = Secure.IsAdmin(cookies().get("token")?.value!);
 
   return (
-    <main className="flex flex-row w-screen h-screen">
+    <main className="flex w-screen h-screen">
       <SidebarDashboard IsAdmin={isAdmin} />
-      <div className="w-full h-full overflow-auto">{children}</div>
+      <div className="flex-1 h-full overflow-auto">{children}</div>
     </main>
   );
 }

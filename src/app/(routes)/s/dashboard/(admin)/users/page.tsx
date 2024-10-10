@@ -49,8 +49,8 @@ const dashboardUsersPage = async ({
   }
 
   return (
-    <div className="w-full h-full bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-      <div className="flex flex-col sm:flex-row justify-between items-center px-4 py-4 space-y-4 sm:space-y-0">
+    <div className="w-full h-[100vh] sm:h-full bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+      <div className="flex flex-wrap sm:flex-row justify-center sm:justify-between items-center px-4 py-4 space-y-4 sm:space-y-0">
         <form
           action={handleSearch}
           className="flex flex-row items-center w-full sm:w-auto"

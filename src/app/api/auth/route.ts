@@ -1,9 +1,11 @@
 import { TIME_TOKEN_EXPIRED } from "@/utils/constant";
 import db from "@/utils/db";
 import Secure from "@/utils/secure";
+import { unstable_noStore } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
+  unstable_noStore();
   const { email, password } = await req.json();
 
   console.log(

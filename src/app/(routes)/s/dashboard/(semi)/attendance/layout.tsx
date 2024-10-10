@@ -4,7 +4,7 @@ const dashboardUsersLayout = ({ children }: { children: React.ReactNode }) => {
       <h1 className="w-full text-center font-bold text-xl p-2 text-zinc-800 dark:text-zinc-200">
         Attendance
       </h1>
-      <div className="h-full w-full bg-white dark:bg-zinc-900 rounded-tl-xl pt-2 shadow-md">
+      <div className="h-full w-full bg-white dark:bg-zinc-900 rounded-tl-xl pt-2 shadow-md overflow-auto">
         {children}
       </div>
     </div>

@@ -22,7 +22,7 @@ const LoginPage = ({ searchParams }: { searchParams?: any }) => {
       const data = await res.json();
 
       if (res.status == 200) {
-        router.push(searchParams.redirectTo || "/s");
+        router.push(searchParams.redirectTo ?? "/s");
       } else {
         router.push(
           `/login?redirectTo=${searchParams.redirectTo}&error=${data.message}`
