@@ -20,28 +20,21 @@ const DashboardDevicePage = async ({ searchParams }: { searchParams: any }) => {
 
   return (
     <div className="w-full h-[100vh] sm:h-full dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-4">
-      <div className="flex flex-row justify-between items-center mb-6">
-        <div className="flex items-center gap-2">
-          <BackButton className="bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md">
-            Back
-          </BackButton>
-        </div>
-        <form action={createIotDevice} className="flex items-center gap-2">
-          <input
-            name="name"
-            id="name"
-            type="text"
-            placeholder="Device name"
-            className="border py-2 px-4 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-700"
-          />
-          <button
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md"
-          >
-            <PlusIcon className="h-5 w-5" />
-          </button>
-        </form>
-      </div>
+      <form action={createIotDevice} className="flex items-center gap-2 mb-6">
+        <input
+          name="name"
+          id="name"
+          type="text"
+          placeholder="Device name"
+          className="border py-2 px-4 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-700"
+        />
+        <button
+          type="submit"
+          className="bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-bold p-2.5 rounded-md aspect-square"
+        >
+          <PlusIcon className="h-5 w-5" />
+        </button>
+      </form>
       <div className="flex flex-col gap-4">
         {devices.map((device) => (
           <div

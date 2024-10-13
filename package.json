@@ -1,6 +1,6 @@
 {
   "name": "itsc-division-web",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },

@@ -10,6 +10,10 @@ export type JwtModel = {
 };
 
 class Secure {
+  static getTokenExpirationDate(): number {
+    return Math.floor(Date.now() / 1000) + TIME_TOKEN_EXPIRED;
+  }
+
   static async hashPassword(password: string): Promise<string> {
     const encoder = new TextEncoder();
     const data = encoder.encode(password);
@@ -34,7 +38,7 @@ class Secure {
       email: email,
       role: role,
       iat: Math.floor(Date.now() / 1000),
-      exp: TIME_TOKEN_EXPIRED,
+      exp: this.getTokenExpirationDate(),
     } as JwtModel);
 
     const encodedHeader = btoa(header)

@@ -18,7 +18,7 @@ const dashboardProfilePage = () => {
     <div className="w-full h-full flex flex-col justify-center items-center bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       <div className="p-6 shadow-lg rounded-xl bg-white dark:bg-gray-800 transition-all">
         <img
-          src="/default_profile.jpeg"
+          src="/static/images/profile.webp"
           alt="Profile Picture"
           className="aspect-square w-60 rounded-md mb-4 object-cover"
         />

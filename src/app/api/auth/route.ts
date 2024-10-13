@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
   res.cookies.set({
     name: "token",
     value: token,
-    maxAge: TIME_TOKEN_EXPIRED,
+    maxAge: Secure.getTokenExpirationDate(),
   });
 
   return res;

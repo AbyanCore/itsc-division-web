@@ -1,49 +1,20 @@
 import React from "react";
 import Link from "next/link";
-import dynamic from "next/dynamic";
-
-const Spline = dynamic(() => import("@splinetool/react-spline"), {
-  ssr: true,
-  loading: () => (
-    <div className="w-full h-full animate-pulse">
-      <p>Loading 3D Scene</p>
-    </div>
-  ),
-});
-
-const SparklingGrid = () => {
-  return (
-    <div className="absolute inset-0 z-0 overflow-hidden">
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(20px,1fr))] gap-4 h-full w-full">
-        {[...Array(200)].map((_, i) => (
-          <div key={i} className="relative">
-            <div
-              className="absolute inset-0 bg-blue-500 opacity-0 rounded-full"
-              style={{
-                animation: `twinkle 4s infinite ${Math.random() * 4}s`,
-                transform: `scale(${Math.random() * 0.8 + 0.2})`,
-              }}
-            ></div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
 
 export default function HomePage() {
   return (
     <main className="bg-gradient-to-br from-gray-900 to-gray-800 text-white min-h-screen overflow-hidden">
-      <SparklingGrid />
       {/* Header */}
-      <header className="fixed z-20 w-full backdrop-blur-lg bg-gray-900 bg-opacity-90">
+      <header className="fixed z-20 w-full backdrop-blur-lg backdrop-brightness-[0.25]">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-3xl font-bold text-blue-400">ITSC Division</h1>
+          <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-purple-500">
+            ITSC
+          </h1>
           <nav>
-            <ul className="flex gap-6 items-center">
+            <ul className="flex flex-col sm:flex-row sm:gap-6 items-center">
               <li>
                 <Link
-                  href="/s"
+                  href="/s/dashboard"
                   className="text-blue-400 hover:text-blue-300 transition duration-300"
                 >
                   Dashboard
@@ -54,7 +25,7 @@ export default function HomePage() {
                   href="#"
                   className="text-gray-300 hover:text-white transition duration-300"
                 >
-                  Home
+                  Contact
                 </Link>
               </li>
             </ul>
@@ -63,19 +34,20 @@ export default function HomePage() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center">
+      <section className="relative min-h-screen flex items-center bg-black">
         <div className="absolute inset-0 z-0">
-          <Spline
-            className="scale-150"
-            scene="https://prod.spline.design/6tZyvYuIOQAf4ktp/scene.splinecode"
+          <img
+            src="/static/images/bg.webp"
+            alt="bg"
+            className="object-cover object-center w-full h-full"
           />
         </div>
         <div className="container mx-auto px-4 text-center relative z-10">
-          <div className="bg-gray-900 bg-opacity-10 p-8 rounded-lg backdrop-blur-lg backdrop-brightness-75 inline-block">
-            <h2 className="text-5xl md:text-6xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-purple-500">
-              Welcome to ITSC Division
+          <div className="p-8 rounded-lg inline-block select-none">
+            <h2 className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-purple-500 drop-shadow-2xl">
+              ITSC Division
             </h2>
-            <p className="text-xl mb-8 max-w-2xl mx-auto text-gray-200">
+            <p className="text-md md:text-xl mb-8 max-w-2xl mx-auto text-gray-200">
               Memberdayakan inovasi melalui solusi TI terdepan
             </p>
           </div>
@@ -83,7 +55,7 @@ export default function HomePage() {
       </section>
 
       {/* Services Section */}
-      <section className="py-24 bg-black bg-opacity-75 backdrop-blur-lg relative z-10">
+      <section className="py-24 bg-black bg-opacity-70 relative z-10">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-purple-500">
             Our Innovative Divisions
@@ -123,7 +95,7 @@ export default function HomePage() {
             ].map((service, index) => (
               <div
                 key={index}
-                className="bg-gray-800 bg-opacity-50 p-8 rounded-lg shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105 backdrop-blur-sm"
+                className="bg-gray-800 bg-opacity-50 p-8 rounded-lg hover:shadow-2xl hover:shadow-gray-800 transition duration-300 transform hover:scale-105 backdrop-blur-sm"
               >
                 <div className="text-4xl mb-4">{service.icon}</div>
                 <h3 className="text-2xl font-bold mb-4 text-blue-400">
@@ -143,12 +115,11 @@ export default function HomePage() {
             About ITSC
           </h2>
           <p className="text-center max-w-3xl mx-auto text-lg text-gray-300">
-            ITSC Division is at the forefront of technological innovation,
-            committed to delivering cutting-edge IT solutions that empower
-            businesses to thrive in the digital age. Our team of experts
-            combines creativity with technical expertise to ensure your
-            technology needs are met with excellence and forward-thinking
-            solutions.
+            Divisi ITSC berada di garis depan inovasi teknologi, berkomitmen
+            untuk memberikan solusi TI mutakhir yang memberdayakan bisnis untuk
+            berkembang di era digital. Tim ahli kami menggabungkan kreativitas
+            dengan keahlian teknis untuk memastikan kebutuhan teknologi Anda
+            terpenuhi dengan solusi yang unggul dan berpikiran maju.
           </p>
         </div>
       </section>
