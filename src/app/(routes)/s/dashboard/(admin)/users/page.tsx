@@ -23,7 +23,7 @@ const dashboardUsersPage = async ({
   const page: number = searchParams.page ?? 1;
   const reverse: number = searchParams.reverse ?? 0;
 
-  let users =
+  const users =
     reverse == 1
       ? ((await getUsers(search, page)) as user[]).reverse()
       : ((await getUsers(search, page)) as user[]);

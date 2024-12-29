@@ -1,4 +1,5 @@
-FROM node:18-alpine
+# stage 1
+FROM node:20-alpine3.19 AS build
 
 WORKDIR /app
 
@@ -7,10 +8,7 @@ COPY . .
 RUN npm install
 RUN npx prisma generate
 
-ENV NODE_ENV=production
-EXPOSE 3000
-
-RUN npm run build 
+RUN npm run build
 
 # copy static files to standlone build folder
 RUN mkdir -p .next/standalone/.next/static && \
@@ -19,4 +17,15 @@ RUN mkdir -p .next/standalone/.next/static && \
 RUN mkdir -p .next/standalone/public && \
     cp -r public/* .next/standalone/public/
 
-CMD ["node", ".next/standalone/server.js"]
+# stage 2
+FROM node:20-alpine3.19 AS PRODUCTION
+
+WORKDIR /app
+
+ENV NODE_ENV=production
+
+COPY --from=build /app/.next/standalone ./
+
+EXPOSE 3000
+
+CMD ["node", "server.js"]

@@ -1,10 +1,9 @@
 "use client";
-
-import { TIME_TOKEN_EXPIRED } from "@/utils/constant";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const LoginPage = ({ searchParams }: { searchParams?: any }) => {
   const router = useRouter();
+
   function handleSubmit(data: FormData) {
     const email = data.get("email")!.toString();
     const password = data.get("password")!.toString();
@@ -22,10 +21,16 @@ const LoginPage = ({ searchParams }: { searchParams?: any }) => {
       const data = await res.json();
 
       if (res.status == 200) {
-        router.push(searchParams.redirectTo ?? "/s");
+        router.push(
+          searchParams.redirectTo
+            ? decodeURIComponent(searchParams.redirectTo)
+            : "/s"
+        );
       } else {
         router.push(
-          `/login?redirectTo=${searchParams.redirectTo}&error=${data.message}`
+          `/login?redirectTo=${encodeURIComponent(
+            searchParams.redirectTo
+          )}&error=${data.message}`
         );
       }
     });

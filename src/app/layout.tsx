@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import FooterGlobal from "@/component/FooterGlobal";
+import { NotifyBar, NotifyProvider } from "@/context/NotifyContext";
 
 export const metadata: Metadata = {
   title: "ITSC DIVISI",
@@ -15,8 +16,11 @@ export default function RootLayout({
   return (
     <html lang="id">
       <body>
-        {children}
-        <FooterGlobal />
+        <NotifyProvider>
+          <NotifyBar />
+          {children}
+          <FooterGlobal />
+        </NotifyProvider>
       </body>
     </html>
   );

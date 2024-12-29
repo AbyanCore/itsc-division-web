@@ -38,6 +38,12 @@
       "@/serverAction/*": [
         "./src/server-action/*"
       ],
+      "@/context/*": [
+        "./src/context/*"
+      ],
+      "@/hook/*": [
+        "./src/hook/*"
+      ],
     }
   },
   "include": [
