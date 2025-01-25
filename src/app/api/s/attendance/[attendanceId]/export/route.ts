@@ -9,7 +9,7 @@ export async function GET(req: NextRequest, context: any) {
   const attendaceId = Number(context.params.attendanceId);
 
   // check is admin
-  if (!Secure.IsAdmin(cookieService.get("token")!)) {
+  if (!Secure.hasPermission(cookieService.get("token")!, ["admin"])) {
     return NextResponse.json(
       {
         message: "Unauthorized",

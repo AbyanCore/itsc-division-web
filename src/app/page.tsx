@@ -14,7 +14,7 @@ export default function HomePage() {
             <ul className="flex flex-col sm:flex-row sm:gap-6 items-center">
               <li>
                 <Link
-                  href="/s/dashboard"
+                  href={"/s/dashboard"}
                   className="text-blue-400 hover:text-blue-300 transition duration-300"
                 >
                   Dashboard

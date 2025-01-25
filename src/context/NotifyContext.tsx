@@ -121,4 +121,6 @@ const NotifyBar = () => {
   );
 };
 
+NotifyProvider.NotifyBar = NotifyBar;
+
 export { NotifyContext, NotifyProvider, NotifyBar };

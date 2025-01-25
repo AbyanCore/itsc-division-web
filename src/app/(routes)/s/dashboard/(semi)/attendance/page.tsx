@@ -4,12 +4,11 @@ import DivisionEnrollmentService from "@/service/divisionEnrollmentService";
 import divisionService from "@/service/divisionService";
 import userAttendanceService from "@/service/userAttendanceService";
 import userService from "@/service/userService";
-import { time3Difference } from "@/utils/time";
-import { attendance, attendance_type, division } from "@prisma/client";
+import { attendance, attendance_type } from "@prisma/client";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-const dsahboardAttendancePage = async () => {
+const dashboardAttendancePage = async () => {
   const user = await userService.getUserByToken(cookies().get("token")!.value);
 
   if (user?.type === "admin") {
@@ -69,7 +68,7 @@ const dsahboardAttendancePage = async () => {
             name="type"
             value={attendance_type.hadir}
           />
-          <button type="submit">Absen</button>
+          <button type="submit">Present</button>
         </form>
         <form
           className="ml-10 p-1 px-3 rounded-md bg-orange-500 hover:bg-orange-600 text-white transition-all"
@@ -93,7 +92,7 @@ const dsahboardAttendancePage = async () => {
             name="type"
             value={attendance_type.izin}
           />
-          <button type="submit">Izin</button>
+          <button type="submit">Excused</button>
         </form>
       </div>
     );
@@ -136,4 +135,4 @@ const dsahboardAttendancePage = async () => {
   );
 };
 
-export default dsahboardAttendancePage;
+export default dashboardAttendancePage;

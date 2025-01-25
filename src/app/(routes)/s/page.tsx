@@ -7,10 +7,10 @@ const sPage = () => {
   const router = useRouter();
 
   useEffect(() => {
-    // delay for 2 seconds and redirect to /s/dashboard
+    // delay for 3 seconds and redirect to /s/dashboard
     const redtimeout = setTimeout(() => {
       router.replace("/s/dashboard");
-    }, 2000);
+    }, 3000);
 
     return () => {
       clearTimeout(redtimeout);

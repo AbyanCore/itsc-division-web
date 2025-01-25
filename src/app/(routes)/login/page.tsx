@@ -1,14 +1,18 @@
 "use client";
+import { useNotify } from "@/hook/NotifyHook";
 import { useRouter } from "next/navigation";
 
 const LoginPage = ({ searchParams }: { searchParams?: any }) => {
   const router = useRouter();
+  const Notify = useNotify();
 
-  function handleSubmit(data: FormData) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
     const email = data.get("email")!.toString();
     const password = data.get("password")!.toString();
 
-    fetch("/api/auth", {
+    const res = await fetch("/api/auth", {
       body: JSON.stringify({
         email,
         password,
@@ -17,23 +21,48 @@ const LoginPage = ({ searchParams }: { searchParams?: any }) => {
         "Content-Type": "application/json",
       },
       method: "POST",
-    }).then(async (res) => {
-      const data = await res.json();
-
-      if (res.status == 200) {
-        router.push(
-          searchParams.redirectTo
-            ? decodeURIComponent(searchParams.redirectTo)
-            : "/s"
-        );
-      } else {
-        router.push(
-          `/login?redirectTo=${encodeURIComponent(
-            searchParams.redirectTo
-          )}&error=${data.message}`
-        );
-      }
     });
+
+    const responseData = await res.json();
+
+    if (res.status == 200) {
+      if (
+        searchParams.redirectTo == null ||
+        searchParams.redirectTo == "" ||
+        searchParams.redirectTo == undefined
+      ) {
+        Notify.addNotify({
+          message: "Login Success you will be redirected to /s",
+          type: "success",
+          timeout: 3000,
+        });
+        router.push("/s");
+      } else {
+        Notify.addNotify({
+          message:
+            "Login Success you will be redirected to " +
+            searchParams.redirectTo,
+          type: "success",
+          timeout: 3000,
+        });
+
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+
+        router.push(searchParams.redirectTo);
+      }
+    } else {
+      Notify.addNotify({
+        message: "Login Failed",
+        type: "error",
+      });
+      router.push(
+        `/login?error=${responseData.message} ${
+          searchParams.redirectTo
+            ? `&redirectTo=${searchParams.redirectTo}`
+            : ""
+        }`
+      );
+    }
   }
 
   return (
@@ -44,7 +73,7 @@ const LoginPage = ({ searchParams }: { searchParams?: any }) => {
             ? "border-red-400 border-4 shadow-red-300"
             : ""
         }`}
-        action={handleSubmit}
+        onSubmit={handleSubmit}
       >
         <h1 className="text-black font-bold text-3xl mb-2">Sign In </h1>
         <small className="text-red-500 italic">

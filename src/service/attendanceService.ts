@@ -3,7 +3,11 @@ import { Prisma } from "@prisma/client";
 
 class attendanceService {
   static async getAttendance() {
-    return await db.attendance.findMany();
+    return await db.attendance.findMany({
+      orderBy: {
+        id: "asc",
+      },
+    });
   }
 
   static async getAttendanceById(id: number) {

@@ -113,10 +113,14 @@ class Secure {
     return JSON.parse(Buffer.from(encodedPayload, "base64url").toString());
   }
 
-  static IsAdmin(token: string | null | undefined): boolean {
+  static hasPermission(
+    token: string | null | undefined,
+    role: user_type[],
+    reverse = false
+  ): boolean {
     if (!token) return false;
     const payload = Secure.extractPayload(token);
-    return payload.role === "admin";
+    return role.includes(payload.role) ? !reverse : reverse;
   }
 }
 

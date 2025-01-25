@@ -27,10 +27,9 @@ export default function SidebarDashboard({ IsAdmin }: { IsAdmin: boolean }) {
     >
       {/* Sidebar toggle button */}
       <div className="flex justify-start">
-        <Bars3Icon
-          className="w-10 h-10 text-gray-800 dark:text-gray-200 cursor-pointer"
-          onClick={() => setIsOpen(!isOpen)}
-        />
+        <span onClick={() => setIsOpen(!isOpen)}>
+          <Bars3Icon className="w-10 h-10 text-gray-800 dark:text-gray-200 cursor-pointer" />
+        </span>
       </div>
 
       {/* Sidebar links */}
